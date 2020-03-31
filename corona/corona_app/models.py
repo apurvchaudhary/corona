@@ -18,6 +18,8 @@ class Country(ModelBase):
 
     name = models.CharField(max_length=255, unique=True)
     population = models.CharField(max_length=255)
+    recovered = models.IntegerField(default=0)
+    death = models.IntegerField(default=0)
 
     objects = Manager()
 
@@ -35,8 +37,6 @@ class State(ModelBase):
     name = models.CharField(max_length=255, unique=True)
     population = models.CharField(max_length=100)
     patients = models.IntegerField(default=0)
-    recovered = models.IntegerField(default=0)
-    death = models.IntegerField(default=0)
 
     objects = Manager()
 

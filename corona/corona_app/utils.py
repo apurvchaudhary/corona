@@ -23,15 +23,11 @@ def get_country_data(request):
         return response(data="No country with this name", code=status.HTTP_404_NOT_FOUND)
     else:
         total=0
-        recovered=0
-        death=0
         country_serializer = CountrySerializer(country)
         for state in country_serializer.data.get("state"):
             total+=state["patients"]
-            recovered+=state["recovered"]
-            death+=state["death"]
         return render(request, template_name='home.html', context={'data': country_serializer.data, 'total' : total,
-                                                                   'recovered' : recovered, 'death' : death})
+                                                                   'recovered' : country.recovered, 'death' : country.death})
 
 def get_safety_template(request):
     return render(request, template_name='safetytips.html')
@@ -66,10 +62,8 @@ def get_state_graph_data(request):
         except ObjectDoesNotExist:
             return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
         else:
-            labels = ["Patients", "Recovered", "Death"]
+            labels = ["Patients"]
             data = []
             data.append(state.patients)
-            data.append(state.recovered)
-            data.append(state.death)
             return response(data={'labels': labels, 'data': data})
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)

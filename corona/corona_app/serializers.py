@@ -6,7 +6,7 @@ class StateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = State
-        fields = ('id', 'name', 'population', 'patients', 'recovered', 'death')
+        fields = ('id', 'name', 'population', 'patients')
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
-        fields = ('name', 'population', 'state')
+        fields = ('name', 'population', 'state', 'recovered', 'death')
 
     def get_name(self, obj):
         return obj.name.upper()

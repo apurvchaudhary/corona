@@ -101,9 +101,31 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
     <div class="dropdown-content">
       <a href="{% url 'by-state' %}?state_id=1">Uttar Pradesh</a>
       <a href="{% url 'by-state' %}?state_id=2">Maharashtra</a>
-      <a href="{% url 'by-state' %}?state_id=3">Kerala</a>
-        <a href="{% url 'by-state' %}?state_id=4">Punjab</a>
-        <a href="{% url 'by-state' %}?state_id=5">Himachal Pradesh</a>
+      <a href="{% url 'by-state' %}?state_id=3">Tamilnadu</a>
+        <a href="{% url 'by-state' %}?state_id=4">Karnataka</a>
+        <a href="{% url 'by-state' %}?state_id=5">Telangana</a>
+        <a href="{% url 'by-state' %}?state_id=6">Kashmir</a>
+        <a href="{% url 'by-state' %}?state_id=6">Jammu</a>
+        <a href="{% url 'by-state' %}?state_id=7">Punjab</a>
+        <a href="{% url 'by-state' %}?state_id=8">Ladhakh</a>
+        <a href="{% url 'by-state' %}?state_id=9">Manipur</a>
+        <a href="{% url 'by-state' %}?state_id=10">Mizoram</a>
+        <a href="{% url 'by-state' %}?state_id=11">Madhya Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=12">West Bengal</a>
+        <a href="{% url 'by-state' %}?state_id=13">Rajasthan</a>
+        <a href="{% url 'by-state' %}?state_id=14">Gujrat</a>
+        <a href="{% url 'by-state' %}?state_id=15">Bihar</a>
+        <a href="{% url 'by-state' %}?state_id=16">Delhi</a>
+        <a href="{% url 'by-state' %}?state_id=17">Andhra Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=18">Orissa</a>
+        <a href="{% url 'by-state' %}?state_id=19">Andaman & Nicobar</a>
+        <a href="{% url 'by-state' %}?state_id=20">Uttarakhand</a>
+        <a href="{% url 'by-state' %}?state_id=21">Goa</a>
+        <a href="{% url 'by-state' %}?state_id=22">Himachal Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=23">Pondicherry</a>
+        <a href="{% url 'by-state' %}?state_id=24">Kerala</a>
+        <a href="{% url 'by-state' %}?state_id=25">Chandigarh</a>
+        <a href="{% url 'by-state' %}?state_id=26">Chhattisgarh</a>
     </div>
   </div>
 </div><br><h2>
@@ -111,22 +133,18 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
     <tr>
         <th style="color:blue">Population</th>
         <th style="color:red">Corona positive Patients</th>
-        <th style="color:green">Recovered</th>
-        <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
         <th style="color:red">{{data.patients}}</th>
-        <th style="color:green">{{data.recovered}}</th>
-        <th style="color:#BB3518">{{data.death}}</th>
     </tr>
         <br>
 </table></center>
 <br><br><br>
 {% block content %}
 
-  <div id="container" style="width: 45%;">
-    <canvas id="population-chart" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
+  <div id="container" style="width: 75%;">
+    <canvas id="population-chart" height="50" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -143,10 +161,11 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
           var ctx = $populationChart[0].getContext("2d");
 
           new Chart(ctx, {
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
               labels: data.labels,
               datasets: [{
+                barThickness: 30,
                 label: 'Patient',
                 backgroundColor: '#C0392B',
                 data: data.data
@@ -155,7 +174,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
             options: {
               responsive: true,
               legend: {
-                position: 'left',
+                position: 'right',
               },
               title: {
                 display: true,
