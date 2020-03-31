@@ -95,9 +95,11 @@ tr:nth-child(even) {
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-      <a href="#">Uttar Pradesh</a>
-      <a href="#">Maharashtra</a>
-      <a href="#">Kerala</a>
+      <a href="{% url 'by-state' %}?state_id=1">Uttar Pradesh</a>
+      <a href="{% url 'by-state' %}?state_id=2">Maharashtra</a>
+      <a href="{% url 'by-state' %}?state_id=3">Kerala</a>
+        <a href="{% url 'by-state' %}?state_id=4">Punjab</a>
+        <a href="{% url 'by-state' %}?state_id=5">Himachal Pradesh</a>
     </div>
   </div><a style="float:right" href="https://www.who.int/" target="_blank"><i class="fa fa-fw fa fa-hashtag"></i>for more https://www.who.int/</a>
 </div><br>

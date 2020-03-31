@@ -85,11 +85,10 @@ tr:nth-child(even) {
     </style>
 </head>
 <body>
-<marquee behavior="scroll" direction="left"><img src="//www.html.am/images/html-codes/marquees/fish-swimming.gif" width="94"
-                                                 height="88" alt="Swimming fish" />
+<marquee behavior="scroll" direction="left">
     <h2 style="color:#27A240">Stay Home Stay Safe !!</h2>
 </marquee>
-<center><h1>Country : {{data.name}}</h1></center>
+<center><h1>Indian State : {{data.name}}</h1></center>
 <marquee>Hi these all figures are collected from Live news channels of India, on which current patient is showing in hourly manner. These
 whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips</marquee>
 <div class="navbar">
@@ -107,91 +106,27 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
         <a href="{% url 'by-state' %}?state_id=5">Himachal Pradesh</a>
     </div>
   </div>
-</div><br> <center> <table>
+</div><br><h2>
+    <center><table>
     <tr>
         <th style="color:blue">Population</th>
-        <th style="color:red">Total Corona +ve Patients</th>
+        <th style="color:red">Corona positive Patients</th>
         <th style="color:green">Recovered</th>
         <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
-        <th style="color:red">{{total}}</th>
-        <th style="color:green">{{recovered}}</th>
-        <th style="color:#BB3518">{{death}}</th>
+        <th style="color:red">{{data.patients}}</th>
+        <th style="color:green">{{data.recovered}}</th>
+        <th style="color:#BB3518">{{data.death}}</th>
     </tr>
-</table></center><br>
-<center><h2>Data Across States :-</h2></center>
-   <center> <table>
-    <tr>
-        <th>State Name</th>
-        <th style="color:blue">Population</th>
-        <th style="color:red">Corona +ve Patients</th>
-        <th style="color:green">Recovered</th>
-        <th style="color:#BB3518">Death</th>
-    </tr>
-{% for i in data.state%}
-        <tr>
-        <th>{{i.name}}</th>
-        <th>{{i.population}}</th>
-        <th style="color:red">{{i.patients}}</th>
-        <th style="color:green">{{i.recovered}}</th>
-        <th style="color:#BB3518">{{i.death}}</th>
-    </tr>
-    {% endfor %}</table></center>
+        <br>
+</table></center>
 <br><br><br>
-        {% block content1 %}
-
-  <div id="container_" style="width: 75%;">
-    <canvas id="pie-chart" data-url="{% url 'graph' %}"></canvas>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
-
-    $(function () {
-
-      var $pieChart = $("#pie-chart");
-      $.ajax({
-        url: $pieChart.data("url"),
-        success: function (data) {
-
-          var ctx = $pieChart[0].getContext("2d");
-
-          new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: data.labels,
-              datasets: [{
-                label: 'Patient Count',
-                backgroundColor: [
-                '#4EE589', '#E5694E', '#904EE5', '#E5DE4E', '#5EE078'
-                ],
-                data: data.data
-              }]
-            },
-            options: {
-              responsive: true,
-              legend: {
-                position: 'left',
-              },
-              title: {
-                display: true,
-                text: 'Corona Patient Across India',
-              }
-            }
-          });
-
-        }
-      });
-
-    });
-  </script><br><br>
 {% block content %}
 
-  <div id="container" style="width: 75%;">
-    <canvas id="population-chart" data-url="{% url 'graph' %}"></canvas>
+  <div id="container" style="width: 45%;">
+    <canvas id="population-chart" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -212,7 +147,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Patient Count',
+                label: 'Patient',
                 backgroundColor: '#C0392B',
                 data: data.data
               }]
@@ -220,11 +155,11 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
             options: {
               responsive: true,
               legend: {
-                position: 'right',
+                position: 'left',
               },
               title: {
                 display: true,
-                text: 'Corona Patient all over India'
+                text: 'Corona Patient across state'
               }
             }
           });
@@ -234,7 +169,6 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 
     });
   </script>
-    {% endblock %}
 {% endblock %}
 </h2>
 </body>

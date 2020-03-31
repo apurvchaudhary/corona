@@ -6,7 +6,7 @@ class StateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = State
-        fields = ('name', 'population', 'patients', 'recovered', 'death')
+        fields = ('id', 'name', 'population', 'patients', 'recovered', 'death')
 
 
 class CountrySerializer(serializers.ModelSerializer):
