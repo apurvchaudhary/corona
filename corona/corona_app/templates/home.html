@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+    </style>
+</head>
+<body>
+<marquee behavior="scroll" direction="left"><img src="//www.html.am/images/html-codes/marquees/fish-swimming.gif" width="94"
+                                                 height="88" alt="Swimming fish" />
+    <h2 style="color:#27A240">Stay Home Stay Safe !!</h2>
+</marquee>
+<center><h1>Country : {{data.name}}</h1></center>
+<marquee>Hi these all figures are collected from Live news channels of India, on which current patient is showing in hourly manner. These
+whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips</marquee>
+<div class="navbar">
+  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+  <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i> Safety Tips</a>
+    <div class="dropdown">
+    <button class="dropbtn">States Statistics
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Uttar Pradesh</a>
+      <a href="#">Maharashtra</a>
+      <a href="#">Kerala</a>
+    </div>
+  </div>
+</div><br>
+<h2>Data on each States basis :-
+    <table>
+    <tr>
+        <th>State Name</th>
+        <th style="color:blue">Population</th>
+        <th style="color:red">Corona positive Patients</th>
+        <th style="color:green">Recovered</th>
+        <th style="color:#BB3518">Death</th>
+    </tr>
+{% for i in data.state%}
+        <tr>
+        <th>{{i.name}}</th>
+        <th>{{i.population}}</th>
+        <th style="color:red">{{i.patients}}</th>
+        <th style="color:green">{{i.recovered}}</th>
+        <th style="color:#BB3518">{{i.death}}</th>
+    </tr>
+        <br>
+    {% endfor %}</table>
+<br><br><br>
+        {% block content1 %}
+
+  <div id="container_" style="width: 75%;">
+    <canvas id="pie-chart" data-url="{% url 'graph' %}"></canvas>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    $(function () {
+
+      var $pieChart = $("#pie-chart");
+      $.ajax({
+        url: $pieChart.data("url"),
+        success: function (data) {
+
+          var ctx = $pieChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Patient Count',
+                backgroundColor: [
+                '#4EE589', '#E5694E', '#904EE5', '#E5DE4E', '#5EE078'
+                ],
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'left',
+              },
+              title: {
+                display: true,
+                text: 'Corona Patient Across India',
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+  </script><br><br>
+{% block content %}
+
+  <div id="container" style="width: 95%;">
+    <canvas id="population-chart" data-url="{% url 'graph' %}"></canvas>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    $(function () {
+
+      var $populationChart = $("#population-chart");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Patient Count',
+                backgroundColor: '#C0392B',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'right',
+              },
+              title: {
+                display: true,
+                text: 'Corona Patient all over India'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+  </script>
+    {% endblock %}
+{% endblock %}
+</h2>
+</body>
+</html>

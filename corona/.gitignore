@@ -1,0 +1,6 @@
+# ignore file formats
+*.pyc
+*.sqlite3
+
+# ignore folder
+.idea/
