@@ -1,7 +1,6 @@
 # ignore file formats
 *.pyc
 *.sqlite3
-corona/settings.py
 
 # ignore folder
 /.idea/
