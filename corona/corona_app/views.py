@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from corona_app import utils
+from corona_app.permissions import Check_API_KEY_Auth
 
 # Create your views here.
 class CountryView(APIView):
@@ -33,6 +34,7 @@ class StateGraphView(APIView):
 
 
 class UpdateDataTask(APIView):
+    permission_classes = (Check_API_KEY_Auth,)
 
     def get(self, request):
         return utils.update_data_state_wise()
