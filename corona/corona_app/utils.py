@@ -3,10 +3,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework.response import Response
 
-from corona_app.models import State, Country
+from corona_app.models import State, Country, District
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer
-from corona_app.constants import UPDATe_COUNTRY_DATA_URL
+from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -63,15 +63,19 @@ def get_state_graph_data(request):
         except ObjectDoesNotExist:
             return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
         else:
-            labels = ["Patients"]
-            data = []
-            data.append(state.patients)
-            return response(data={'labels': labels, 'data': data})
+            state_serializer = StateSerializer(state)
+            if state_serializer:
+                labels = []
+                data = []
+                for dist in state_serializer.data.get("district"):
+                    labels.append(dist["name"])
+                    data.append(dist["patients"])
+                return response(data={'labels': labels, 'data': data})
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
 
 def update_data_state_wise():
     try:
-        response_data = requests.get(UPDATe_COUNTRY_DATA_URL)
+        response_data = requests.get(UPDATE_COUNTRY_DATA_URL)
         data = response_data.json()
         active_now = data.get("statewise")[0].get("active")
         confirmed = data.get("statewise")[0].get("confirmed")
@@ -88,5 +92,26 @@ def update_data_state_wise():
                 state_obj.patients = state.get("confirmed")
                 state_obj.save()
         return response(data="Updated Successfully")
+    except Exception as e:
+        return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
+
+def update_data_state_district_wise():
+    try:
+        response_data = requests.get(UPDATE_STATE_DISTRICT_DATA_URL)
+        data = response_data.json()
+        for state in data:
+            state_obj = State.objects.filter(name=state).first()
+            if state_obj:
+                district_data = data[state].get("districtData")
+                for dist in district_data:
+                    district = District.objects.filter(state=state_obj.id, name=dist).first()
+                    if district:
+                        dist_data = district_data[dist]
+                        district.patients = dist_data.get("confirmed")
+                        district.save()
+                    else:
+                        dist_data = district_data[dist]
+                        District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
+        return data
     except Exception as e:
         return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)

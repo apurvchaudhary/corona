@@ -1,12 +1,20 @@
 from rest_framework import  serializers
-from corona_app.models import Country, State
+from corona_app.models import Country, State, District
 
+
+class DistrictSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = District
+        fields = ('name', 'patients')
 
 class StateSerializer(serializers.ModelSerializer):
 
+    district = DistrictSerializer(source='get_district', many=True)
+
     class Meta:
         model = State
-        fields = ('id', 'name', 'population', 'patients')
+        fields = ('id', 'name', 'population', 'patients', 'district')
 
 
 class CountrySerializer(serializers.ModelSerializer):

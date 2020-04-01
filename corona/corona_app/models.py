@@ -45,15 +45,18 @@ class State(ModelBase):
     def __str__(self):
         return f"{self.name} - {self.patients}"
 
+    @property
+    def get_district(self):
+        return [dist for dist in self.district_set.all()]
 
-class History(ModelBase):
 
-    date = models.DateTimeField()
-    state = models.ForeignKey(State, on_delete=models.CASCADE, default=0)
-    previous = models.IntegerField()
-    now = models.IntegerField()
+class District(ModelBase):
+
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    patients = models.IntegerField()
 
     objects = Manager()
 
     def __str__(self):
-        return f"{self.date} - {self.now}"
+        return f"{self.name}"

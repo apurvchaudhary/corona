@@ -135,11 +135,11 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
         <a href="{% url 'by-state' %}?state_id=34">Lakshadweep</a>
     </div>
   </div>
-</div><br><h2>
+</div><br>
     <center><table>
     <tr>
         <th style="color:blue">Population</th>
-        <th style="color:red">Corona Confirmed Patients</th>
+        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
@@ -147,11 +147,26 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
     </tr>
         <br>
 </table></center>
+<center><h2>Confirmed in {{data.name}} districts :-</h2></center>
+ <center><table>
+    <tr>
+        <th style="color:blue">District</th>
+        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
+    </tr>
+     {% for dist in data.district%}
+        <tr>
+        <th>{{dist.name}}</th>
+        <th style="color:red">{{dist.patients}}</th>
+    </tr>
+     {% endfor %}
+        <br>
+</table></center>
+
 <br><br><br>
 {% block content %}
 
-  <div id="container" style="width: 75%;">
-    <canvas id="population-chart" height="50" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
+  <div id="container" style="width: 85%;">
+    <canvas id="population-chart" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -168,11 +183,10 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
           var ctx = $populationChart[0].getContext("2d");
 
           new Chart(ctx, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
               labels: data.labels,
               datasets: [{
-                barThickness: 30,
                 label: 'Patient',
                 backgroundColor: '#C0392B',
                 data: data.data

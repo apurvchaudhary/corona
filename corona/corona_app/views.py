@@ -37,4 +37,5 @@ class UpdateDataTask(APIView):
     permission_classes = (Check_API_KEY_Auth,)
 
     def get(self, request):
+        utils.update_data_state_district_wise()
         return utils.update_data_state_wise()
