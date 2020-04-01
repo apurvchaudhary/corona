@@ -28,8 +28,7 @@ def get_country_data(request):
         country_serializer = CountrySerializer(country)
         for state in country_serializer.data.get("state"):
             total+=state["patients"]
-        return render(request, template_name='home.html', context={'data': country_serializer.data, 'total' : total,
-                                                                   'recovered' : country.recovered, 'death' : country.death})
+        return render(request, template_name='home.html', context={'data': country_serializer.data, 'total' : total})
 
 def get_safety_template(request):
     return render(request, template_name='safetytips.html')

@@ -140,15 +140,17 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 </div><br> <center> <table>
     <tr>
         <th style="color:blue">Population</th>
-        <th style="color:red">Total Corona +ve Patients</th>
+        <th style="color:red">Confirmed Corona Patients</th>
+        <th style="color:red">Active (still +ve)</th>
         <th style="color:green">Recovered</th>
         <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
-        <th style="color:red">{{total}}</th>
-        <th style="color:green">{{recovered}}</th>
-        <th style="color:#BB3518">{{death}}</th>
+        <th style="color:red">{{data.patients}}</th>
+            <th style="color:red">{{data.active_now}}</th>
+        <th style="color:green">{{data.recovered}}</th>
+        <th style="color:#BB3518">{{data.death}}</th>
     </tr>
 </table></center><br>
 <center><h2>Data Across States :-</h2></center>
@@ -156,7 +158,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
     <tr>
         <th>State Name</th>
         <th style="color:blue">Population</th>
-        <th style="color:red">Corona +ve Patients</th>
+        <th style="color:red">Confirmed Corona Patients</th>
     </tr>
 {% for i in data.state%}
         <tr>
