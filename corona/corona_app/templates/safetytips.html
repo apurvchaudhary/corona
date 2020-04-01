@@ -91,9 +91,41 @@ tr:nth-child(even) {
   <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
   <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i> Safety Tips</a>
     <div class="dropdown">
-<!--    <button class="dropbtn">States Statistics-->
-<!--      <i class="fa fa-caret-down"></i>-->
-<!--    </button>-->
+<div class="dropdown">
+    <button class="dropbtn">States Statistics
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="{% url 'by-state' %}?state_id=1">Uttar Pradesh</a>
+      <a href="{% url 'by-state' %}?state_id=2">Maharashtra</a>
+      <a href="{% url 'by-state' %}?state_id=3">Tamilnadu</a>
+        <a href="{% url 'by-state' %}?state_id=4">Karnataka</a>
+        <a href="{% url 'by-state' %}?state_id=5">Telangana</a>
+        <a href="{% url 'by-state' %}?state_id=6">Kashmir</a>
+        <a href="{% url 'by-state' %}?state_id=7">Jammu</a>
+        <a href="{% url 'by-state' %}?state_id=8">Punjab</a>
+        <a href="{% url 'by-state' %}?state_id=9">Ladhakh</a>
+        <a href="{% url 'by-state' %}?state_id=10">Manipur</a>
+        <a href="{% url 'by-state' %}?state_id=11">Mizoram</a>
+        <a href="{% url 'by-state' %}?state_id=12">Madhya Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=13">West Bengal</a>
+        <a href="{% url 'by-state' %}?state_id=14">Rajasthan</a>
+        <a href="{% url 'by-state' %}?state_id=15">Gujrat</a>
+        <a href="{% url 'by-state' %}?state_id=16">Bihar</a>
+        <a href="{% url 'by-state' %}?state_id=17">Delhi</a>
+        <a href="{% url 'by-state' %}?state_id=18">Andhra Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=19">Orissa</a>
+        <a href="{% url 'by-state' %}?state_id=20">Andaman & Nicobar</a>
+        <a href="{% url 'by-state' %}?state_id=21">Uttarakhand</a>
+        <a href="{% url 'by-state' %}?state_id=22">Goa</a>
+        <a href="{% url 'by-state' %}?state_id=23">Himachal Pradesh</a>
+        <a href="{% url 'by-state' %}?state_id=24">Pondicherry</a>
+        <a href="{% url 'by-state' %}?state_id=25">Kerala</a>
+        <a href="{% url 'by-state' %}?state_id=26">Chandigarh</a>
+        <a href="{% url 'by-state' %}?state_id=27">Chhattisgarh</a>
+        <a href="{% url 'by-state' %}?state_id=28">Haryana</a>
+    </div>
+  </div>
   </div><a style="float:right" href="https://www.who.int/" target="_blank"><i class="fa fa-fw fa fa-hashtag"></i>for more https://www.who.int/</a>
 </div><br>
 </head>
