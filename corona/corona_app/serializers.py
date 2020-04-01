@@ -16,7 +16,7 @@ class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
-        fields = ('name', 'population', 'state', 'recovered', 'death')
+        fields = ('name', 'population', 'state', 'recovered', 'death', 'active_now')
 
     def get_name(self, obj):
         return obj.name.upper()

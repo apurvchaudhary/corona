@@ -100,6 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+API_KEY_SECRET = 'Apurv1234#1234#'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

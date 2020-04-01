@@ -1,3 +1,4 @@
+import requests
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -5,6 +6,7 @@ from rest_framework.response import Response
 from corona_app.models import State, Country
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer
+from corona_app.constants import UPDATe_COUNTRY_DATA_URL
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -67,3 +69,25 @@ def get_state_graph_data(request):
             data.append(state.patients)
             return response(data={'labels': labels, 'data': data})
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
+
+def update_data_state_wise():
+    try:
+        response_data = requests.get(UPDATe_COUNTRY_DATA_URL)
+        data = response_data.json()
+        active_now = data.get("statewise")[0].get("active")
+        confirmed = data.get("statewise")[0].get("confirmed")
+        death = data.get("statewise")[0].get("deaths")
+        recovered = data.get("statewise")[0].get("recovered")
+        country = Country.objects.get(id=1)
+        if active_now and confirmed and death and recovered:
+            country.death, country.recovered, country.patients, country.active_now   = death, recovered,\
+                                                                                       confirmed, active_now
+            country.save()
+        for state in data.get("statewise")[1:]:
+            state_obj = State.objects.filter(name=state.get("state")).first()
+            if state_obj:
+                state_obj.patients = state.get("confirmed")
+                state_obj.save()
+        return response(data="Updated Successfully")
+    except Exception as e:
+        return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)

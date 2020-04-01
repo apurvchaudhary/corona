@@ -20,6 +20,8 @@ class Country(ModelBase):
     population = models.CharField(max_length=255)
     recovered = models.IntegerField(default=0)
     death = models.IntegerField(default=0)
+    active_now = models.IntegerField(default=0)
+    patients = models.IntegerField(default=0)
 
     objects = Manager()
 

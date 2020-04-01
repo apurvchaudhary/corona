@@ -30,3 +30,9 @@ class StateGraphView(APIView):
 
     def get(self, request):
         return utils.get_state_graph_data(request)
+
+
+class UpdateDataTask(APIView):
+
+    def get(self, request):
+        return utils.update_data_state_wise()

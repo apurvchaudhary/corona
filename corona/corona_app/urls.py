@@ -1,5 +1,5 @@
 from django.urls import re_path
-from corona_app.views import CountryView, SafetyView, GraphView, StateView, StateGraphView
+from corona_app.views import CountryView, SafetyView, GraphView, StateView, StateGraphView, UpdateDataTask
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     re_path(r'graph/', GraphView.as_view(), name="graph"),
     re_path(r'pie/', GraphView.as_view(), name="pie"),
     re_path(r'state/', StateView.as_view(), name="by-state"),
+    re_path(r'update/', UpdateDataTask.as_view(), name="update-data"),
 ]
