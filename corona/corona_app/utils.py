@@ -117,5 +117,10 @@ def update_data_state_district_wise():
         return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
 
 def get_about_page(request):
-    image = About.objects.get(name="mine")
-    return render(request, template_name="about.html", context={"image" : image})
+    try:
+        image = About.objects.get(name="mine")
+    except ObjectDoesNotExist:
+        image = None
+        print("No image found with name 'mine'")
+    finally:
+        return render(request, template_name="about.html", context={"image" : image})
