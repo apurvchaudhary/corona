@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework.response import Response
 
-from corona_app.models import State, Country, District
+from corona_app.models import State, Country, District, About
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer
 from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL
@@ -115,3 +115,7 @@ def update_data_state_district_wise():
         return data
     except Exception as e:
         return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
+
+def get_about_page(request):
+    image = About.objects.get(name="mine")
+    return render(request, template_name="about.html", context={"image" : image})

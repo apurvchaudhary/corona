@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>home</title>
+    <title>state-data</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -95,7 +95,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
   <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
   <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i> Safety Tips</a>
     <div class="dropdown">
-    <button class="dropbtn">States Statistics
+    <button class="dropbtn"><i class="fa fa-fw fa-bar-chart"></i> States Statistics
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
@@ -135,6 +135,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
         <a href="{% url 'by-state' %}?state_id=34">Lakshadweep</a>
     </div>
   </div>
+    <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i>About</a>
 </div><br>
     <center><table>
     <tr>

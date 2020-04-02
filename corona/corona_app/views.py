@@ -39,3 +39,9 @@ class UpdateDataTask(APIView):
     def get(self, request):
         utils.update_data_state_district_wise()
         return utils.update_data_state_wise()
+
+
+class AboutView(APIView):
+
+    def get(self, request):
+        return utils.get_about_page(request)
