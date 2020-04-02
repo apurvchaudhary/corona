@@ -60,13 +60,3 @@ class District(ModelBase):
 
     def __str__(self):
         return f"{self.name}"
-
-class About(ModelBase):
-
-    name = models.CharField(max_length=255)
-    url = models.URLField(default=None)
-
-    objects = Manager()
-
-    def __str__(self):
-        return f"{self.name}"
