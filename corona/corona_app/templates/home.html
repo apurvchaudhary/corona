@@ -19,14 +19,8 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
-.my-header h1 {
-  display:inline-block;
-  margin-top: 40px;
-  padding-right: 150px;
-  padding-left: 100px;
-}
-.my-header span {
-  float: center;
+span.a {
+  display: inline-block;
 }
 .blink-two {
       animation: blinker-two 1.4s linear infinite;
@@ -142,13 +136,9 @@ body {
 </style>
 </head>
 <body>
-<div class="my-header">
-    <h1 style="color:#A3E4D7">Country : {{data.name}}</h1>
-    <span class="blink blink-two" style="color:#FBFCFC">
-      <h1><i class="fa fa-fw fa-exclamation-triangle"></i> Stay Home Stay Safe !!</h1>
-    </span>
-</div>
-<div style="clear:both"></div>
+<h1 class="blink blink-two" style="float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 class="blink blink-two" style="float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<center><span class="a"><h1 style="color:#FADBD8;">Country : INDIA</h1></span></center>
 <marquee style="color:#FBFCFC;" bgcolor="#95A5A6">
   Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner. These
 whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.</marquee>
