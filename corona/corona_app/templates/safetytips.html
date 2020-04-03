@@ -1,31 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<head>
-    <meta charset="UTF-8">
-    <title>safetytips</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 80%;
+<style>
+.my-header h1 {
+  display:inline-block;
+  margin-top: 40px;
+  padding-right: 150px;
+  padding-left: 100px;
+}
+.my-header span {
+  float: center;
+}
+.blink-two {
+      animation: blinker-two 1.4s linear infinite;
+      }
+      @keyframes blinker-two {
+      100% { opacity: 0; }
+      }
+* {
+  box-sizing: border-box;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
+body {
+  width: 100%;
+  margin: 0;
+  background-image: url({{MEDIA_URL}}/media/body_bg.jpg);
+  background-attachment: scroll;
+  background-position: left bottom;
+  background-repeat: repeat;
+  background-size: 100% 100%;
 }
 
 .navbar {
   overflow: hidden;
   background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .navbar a {
@@ -49,138 +60,187 @@ tr:nth-child(even) {
   color: white;
   padding: 14px 16px;
   background-color: inherit;
-  font-family: inherit;
+  font: inherit;
   margin: 0;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
+  background-color: #8E473F;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  width: 80%;
+  left: 0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
+.dropdown-content .header {
+  background: red;
+  padding: 16px;
+  color: white;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-    </style>
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background-color: #ccc;
+  height: 370px;
+}
+
+.column a {
+  float: none;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.column a:hover {
+  background-color: #ddd;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
 </head>
 <body>
-<marquee behavior="scroll" direction="left">
-    <h2 style="color:#27A240">Stay Home Stay Safe !!</h2>
-</marquee>
-<center><h1>Safety tips by WHO</h1></center>
-<marquee>Hi these all figures are collected from Live news channels of India, on which current patient is showing in hourly manner. These
-whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips</marquee>
+<div class="my-header">
+    <h1 style="color:#A3E4D7">Country : INDIA</h1>
+    <span class="blink blink-two" style="color:#FBFCFC">
+      <h1><i class="fa fa-fw fa-exclamation-triangle"></i> Stay Home Stay Safe !!</h1>
+    </span>
+</div>
+<div style="clear:both"></div>
+<marquee style="color:#FBFCFC;" bgcolor="#95A5A6">
+  Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner. These
+whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.</marquee>
 <div class="navbar">
   <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
   <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i> Safety Tips</a>
-    <div class="dropdown">
-<div class="dropdown">
+  <div class="dropdown">
     <button class="dropbtn"><i class="fa fa-fw fa-bar-chart"></i> States Statistics
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-      <a href="{% url 'by-state' %}?state_id=1">Uttar Pradesh</a>
-      <a href="{% url 'by-state' %}?state_id=2">Maharashtra</a>
-      <a href="{% url 'by-state' %}?state_id=3">Tamil Nadu</a>
-        <a href="{% url 'by-state' %}?state_id=4">Karnataka</a>
-        <a href="{% url 'by-state' %}?state_id=5">Telangana</a>
-        <a href="{% url 'by-state' %}?state_id=6">Jammu and Kashmir</a>
-        <a href="{% url 'by-state' %}?state_id=7">Meghalaya</a>
-        <a href="{% url 'by-state' %}?state_id=8">Punjab</a>
-        <a href="{% url 'by-state' %}?state_id=9">Ladakh</a>
-        <a href="{% url 'by-state' %}?state_id=10">Manipur</a>
-        <a href="{% url 'by-state' %}?state_id=11">Mizoram</a>
-        <a href="{% url 'by-state' %}?state_id=12">Madhya Pradesh</a>
-        <a href="{% url 'by-state' %}?state_id=13">West Bengal</a>
-        <a href="{% url 'by-state' %}?state_id=14">Rajasthan</a>
-        <a href="{% url 'by-state' %}?state_id=15">Gujarat</a>
-        <a href="{% url 'by-state' %}?state_id=16">Bihar</a>
-        <a href="{% url 'by-state' %}?state_id=17">Delhi</a>
-        <a href="{% url 'by-state' %}?state_id=18">Andhra Pradesh</a>
-        <a href="{% url 'by-state' %}?state_id=19">Odisha</a>
-        <a href="{% url 'by-state' %}?state_id=20">Andaman & Nicobar</a>
-        <a href="{% url 'by-state' %}?state_id=21">Uttarakhand</a>
-        <a href="{% url 'by-state' %}?state_id=22">Goa</a>
-        <a href="{% url 'by-state' %}?state_id=23">Himachal Pradesh</a>
-        <a href="{% url 'by-state' %}?state_id=24">Puducherry</a>
-        <a href="{% url 'by-state' %}?state_id=25">Kerala</a>
-        <a href="{% url 'by-state' %}?state_id=26">Chandigarh</a>
-        <a href="{% url 'by-state' %}?state_id=27">Chhattisgarh</a>
-        <a href="{% url 'by-state' %}?state_id=28">Haryana</a>
-        <a href="{% url 'by-state' %}?state_id=29">Assam</a>
-        <a href="{% url 'by-state' %}?state_id=30">Jharkhand</a>
-        <a href="{% url 'by-state' %}?state_id=31">Arunachal Pradesh</a>
-        <a href="{% url 'by-state' %}?state_id=32">Dadar & Nagar Haveli</a>
-        <a href="{% url 'by-state' %}?state_id=33">Daman & Diu</a>
-        <a href="{% url 'by-state' %}?state_id=34">Lakshadweep</a>
+      <div class="row">
+        <div class="column">
+          <a href="{% url 'by-state' %}?state_id=1">Uttar Pradesh</a>
+          <a href="{% url 'by-state' %}?state_id=2">Maharashtra</a>
+          <a href="{% url 'by-state' %}?state_id=3">Tamil Nadu</a>
+          <a href="{% url 'by-state' %}?state_id=4">Karnataka</a>
+          <a href="{% url 'by-state' %}?state_id=5">Telangana</a>
+          <a href="{% url 'by-state' %}?state_id=6">Jammu and Kashmir</a>
+          <a href="{% url 'by-state' %}?state_id=7">Meghalaya</a>
+        </div>
+        <div class="column"><a href="{% url 'by-state' %}?state_id=8">Punjab</a>
+          <a href="{% url 'by-state' %}?state_id=9">Ladakh</a>
+          <a href="{% url 'by-state' %}?state_id=10">Manipur</a>
+          <a href="{% url 'by-state' %}?state_id=11">Mizoram</a>
+          <a href="{% url 'by-state' %}?state_id=12">Madhya Pradesh</a>
+          <a href="{% url 'by-state' %}?state_id=13">West Bengal</a>
+          <a href="{% url 'by-state' %}?state_id=14">Rajasthan</a>
+        </div>
+        <div class="column">
+          <a href="{% url 'by-state' %}?state_id=15">Gujarat</a>
+          <a href="{% url 'by-state' %}?state_id=16">Bihar</a>
+          <a href="{% url 'by-state' %}?state_id=17">Delhi</a>
+          <a href="{% url 'by-state' %}?state_id=18">Andhra Pradesh</a>
+          <a href="{% url 'by-state' %}?state_id=19">Odisha</a>
+          <a href="{% url 'by-state' %}?state_id=20">Andaman & Nicobar</a>
+          <a href="{% url 'by-state' %}?state_id=21">Uttarakhand</a>
+        </div>
+        <div class="column">
+          <a href="{% url 'by-state' %}?state_id=22">Goa</a>
+          <a href="{% url 'by-state' %}?state_id=23">Himachal Pradesh</a>
+          <a href="{% url 'by-state' %}?state_id=24">Puducherry</a>
+          <a href="{% url 'by-state' %}?state_id=25">Kerala</a>
+          <a href="{% url 'by-state' %}?state_id=26">Chandigarh</a>
+          <a href="{% url 'by-state' %}?state_id=27">Chhattisgarh</a>
+          <a href="{% url 'by-state' %}?state_id=28">Haryana</a>
+        </div>
+        <div class="column">
+          <a href="{% url 'by-state' %}?state_id=29">Assam</a>
+          <a href="{% url 'by-state' %}?state_id=30">Jharkhand</a>
+          <a href="{% url 'by-state' %}?state_id=31">Arunachal Pradesh</a>
+          <a href="{% url 'by-state' %}?state_id=32">Dadar & Nagar Haveli</a>
+          <a href="{% url 'by-state' %}?state_id=33">Daman & Diu</a>
+          <a href="{% url 'by-state' %}?state_id=34">Lakshadweep</a>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-    <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i>About</a>
+  <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i>About</a>
     <a style="float:right" href="https://www.who.int/" target="_blank"><i class="fa fa-fw fa fa-hashtag"></i>for more https://www.who.int/</a>
-</div><br>
-</head>
-<body>
+</div>
+<p>
+<span style="color:#FBFCFC">
+  <img src="{{ MEDIA_URL }}/media/stay-home.jpg"
+       alt="Apurv"
+       style="float: right; padding-right:40px; padding-top:40px;"
+       height="400px"
+       width="350px">
+</span>
 <blockquote style=”border: 2px solid #666; padding: 10px; background-color: #ccc;”>
     <ol style="font-size:130%;">
-        <li style="background-color:powderblue;"><b>Wash your hands frequently</b><br>
-        Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.</li>
-        <h5 style="color:green">Why ? :- Washing your hands with soap and water or using alcohol-based hand rub kills viruses
+        <li style="float:left;"><b style="color:#D6EAF8">Wash your hands frequently</b><br>
+        Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.</li><br>
+        <h5 style="color:#FDFEFE">Why ? :- Washing your hands with soap and water or using alcohol-based hand rub kills viruses
             that may be on your hands.</h5>
 
-        <li style="background-color:powderblue;"><b>Maintain social distancing</b><br>
-        Maintain at least 1 metre (3 feet) distance between yourself and anyone who is coughing or sneezing.</li>
-        <h5 style="color:green">Why ? :- When someone coughs or sneezes they spray small liquid droplets from their nose or mouth
-            which may contain virus. If you are too close, you can breathe in the droplets, including the COVID-19 virus
+        <li style="float:left;"><b style="color:#D6EAF8">Maintain social distancing</b><br>
+        Maintain at least 1 metre (3 feet) distance between yourself and anyone who is coughing or sneezing.</li><br>
+        <h5 style="color:#FDFEFE">Why ? :- When someone coughs or sneezes they spray small liquid droplets from their nose or mouth
+            which may contain virus.<br> If you are too close, you can breathe in the droplets, including the COVID-19 virus
             if the person coughing has the disease.</h5>
 
-        <li style="background-color:powderblue;"><b>Avoid touching eyes, nose and mouth</b>.</li>
-        <h5 style="color:green">Why ? :- Hands touch many surfaces and can pick up viruses. Once contaminated,
+        <li style="float:left;"><b style="color:#D6EAF8">Avoid touching eyes, nose and mouth</b>.</li><br>
+        <h5 style="color:#FDFEFE">Why ? :- Hands touch many surfaces and can pick up viruses. Once contaminated,
             hands can transfer the virus to your eyes, nose or mouth. From there, the virus can enter your body and
             can make you sick</h5>
 
-        <li style="background-color:powderblue;"><b>Practice respiratory hygiene</b>.<br>
-        Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and
-            nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.</li></li>
-        <h5 style="color:green">Why ? :- Droplets spread virus. By following good respiratory hygiene you protect the people
+        <li style="float:left;"><b style="color:#D6EAF8">Practice respiratory hygiene</b>.<br>
+        Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth<br> and
+            nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.</li><br><br>
+        <h5 style="color:#FDFEFE">Why ? :- Droplets spread virus. By following good respiratory hygiene you protect the people
             around you from viruses such as cold, flu and COVID-19.</h5>
 
-        <li style="background-color:powderblue;"><b>If you have fever, cough and difficulty breathing, seek medical care early</b>.<br>
+        <li style="float:left;"><b style="color:#D6EAF8">If you have fever, cough and difficulty breathing, seek medical care early</b>.<br>
         Stay home if you feel unwell. If you have a fever, cough and difficulty breathing, seek medical attention and call in
             advance. Follow the directions of your local health authority.</li></li>
-        <h5 style="color:green">Why ? :- National and local authorities will have the most up to date information on
+        <h5 style="color:#FDFEFE">Why ? :- National and local authorities will have the most up to date information on
             the situation in your area. Calling in advance will allow your health care provider to quickly direct you
             to the right health facility. This will also protect you and help prevent spread of viruses and other infections.</h5>
 
-        <li style="background-color:powderblue;"><b>Stay informed and follow advice given by your healthcare provider</b>.<br>
+        <li style="float:left;"><b style="color:#D6EAF8">Stay informed and follow advice given by your healthcare provider</b>.<br>
         Stay informed on the latest developments about COVID-19. Follow advice given by your healthcare provider, your national and
             local public health authority or your employer on how to protect yourself and others from COVID-19.</li></li>
-        <h5 style="color:green">Why ? :- National and local authorities will have the most up to date information on whether
+        <h5 style="color:#FDFEFE">Why ? :- National and local authorities will have the most up to date information on whether
             COVID-19 is spreading in your area. They are best placed to advise on what people in your area should be doing
             to protect themselves.</h5>
     </ol>
-</blockquote>
+</blockquote></p>
 </body>
 </html>
