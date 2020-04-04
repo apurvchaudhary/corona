@@ -35,11 +35,7 @@ span.a {
 body {
   width: 100%;
   margin: 0;
-  background-image: url({{MEDIA_URL}}/media/body_bg.jpg);
-  background-attachment: scroll;
-  background-position: left bottom;
-  background-repeat: repeat;
-  background-size: 100% 100%;
+  background-color: #E8E8E8;
 }
 
 .navbar {
@@ -136,10 +132,10 @@ body {
 </style>
 </head>
 <body>
-<h1 class="blink blink-two" style="float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
-<h1 class="blink blink-two" style="float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
-<center><span class="a"><h1 style="color:#FADBD8;">Country : INDIA</h1></span></center>
-<marquee style="color:#FBFCFC;" bgcolor="#95A5A6">
+<h1 class="blink blink-two" style="color:red; float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 class="blink blink-two" style="color:red; float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<center><span class="a"><h1>Country : INDIA</h1></span></center>
+<marquee bgcolor="#95A5A6">
   Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner. These
 whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.</marquee>
 <div class="navbar">
@@ -208,15 +204,15 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 </span>
 <br> <center> <table>
     <tr>
-        <th style="color:#AED6F1">Population</th>
-        <th style="color:#641E16">Confirmed Corona Patients</th>
-        <th style="color:#C0392B">Active (still +ve)</th>
+        <th style="color:#ff9900">Population</th>
+        <th style="color:red">Confirmed Corona Patients</th>
+        <th style="color:red">Active (still +ve)</th>
         <th style="color:green">Recovered</th>
         <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
-        <th style="color:#641E16">{{data.patients}}</th>
+        <th style="color:red">{{data.patients}}</th>
             <th style="color:red">{{data.active_now}}</th>
         <th style="color:green">{{data.recovered}}</th>
         <th style="color:#BB3518">{{data.death}}</th>
@@ -226,14 +222,14 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
    <center> <table>
     <tr>
         <th style="color:blue">State Name</th>
-        <th style="color:#AED6F1">Population</th>
-        <th style="color:#641E16">Confirmed Corona Patients</th>
+        <th style="color:#ff9900">Population</th>
+        <th style="color:red">Confirmed Corona Patients</th>
     </tr>
 {% for i in data.state%}
         <tr>
         <th>{{i.name}}</th>
         <th>{{i.population}}</th>
-        <th style="color:#641E16">{{i.patients}}</th>
+        <th style="color:red">{{i.patients}}</th>
     </tr>
     {% endfor %}</table></center>
 <br><br><br>
@@ -263,11 +259,11 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
               datasets: [{
                 label: 'Patient Count',
                 backgroundColor: [
-                '#4EE589', '#E5694E', '#904EE5', '#E5DE4E', '#5EE078', '#5499C7', '#FAD7A0', '#B2BABB',
-                '#D4AC0D', '#2E4053', '#C39BD3', '#138D75', '#A04000', '#F4F6F7', '#7FB3D5', '#F6DDCC',
-                '#52BE80', '#F5B041', '#EAF2F8', '#7E5109', '#626567', '#D4EFDF', '#EDBB99', '#7DCEA0',
-                '#5B2C6F', '#6E2C00', '#5B2C6F', '#DC7633', '#3498DB', '#2ECC71', '#F1C40F', '#154360',
-                '#B9770E', '#641E16', '#ABEBC6', '#E59866'
+                '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffe6e6', '#ffe6e6', '#ffe6e6',
+                '#ffe6e6', '#ffe6e6', '#ffcccc', '#ffcccc', '#ffcccc', '#ffcccc', '#ffcccc', '#ffb3b3',
+                '#ffb3b3', '#ffb3b3', '#ffb3b3', '#ffb3b3', '#ff9999', '#ff8080', '#ff6666', '#ff4d4d',
+                '#ff3333', '#ff1a1a', '#ff0000', '#e60000', '#cc0000', '#b30000', '#990000', '#800000',
+                '#660000', '#4d0000', '#330000', '#1a0000', '#000000'
                 ],
                 data: data.data
               }]
@@ -278,14 +274,14 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
                 position: 'left',
                 labels: {
                 fontSize: 14,
-                fontColor: 'rgb(235, 245, 251)'
+                fontColor: 'rgb(0, 0, 0)'
             }
               },
               title: {
                 position: 'left',
                 display: true,
                 text: 'Corona Patient Across India Statistics Pie Chart',
-                fontColor: 'rgb(235, 245, 251)',
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
             }
@@ -320,7 +316,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Patient Count',
+                label: 'Patients Count',
                 backgroundColor: '#C0392B',
                 data: data.data
               }]
@@ -329,24 +325,24 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
               responsive: true,
               scales: {
               yAxes: [{
-              ticks: {fontColor: "white", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15}
               }],
               xAxes: [{
-              ticks: {fontColor: "white", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15}
               }]
               },
               legend: {
-                position: 'right',
+                position: 'left',
                 labels: {
                 fontSize: 18,
-                fontColor: 'rgb(235, 245, 251)'
+                fontColor: 'rgb(0, 0, 0)'
             }
               },
               title: {
                 position: 'left',
                 display: true,
                 text: 'Corona Patient Across India Statistics Bar Graph',
-                fontColor: 'rgb(235, 245, 251)',
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
             }

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from corona_app.models import State, Country, District
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer
-from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL
+from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, INDIAN_STATES
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -20,23 +20,17 @@ def response(data, code=status.HTTP_200_OK):
 
 def get_country_data(request):
     try:
-        country = Country.objects.get(name='india')
+        country = Country.objects.get(name='India')
     except ObjectDoesNotExist:
         return response(data="No country with this name", code=status.HTTP_404_NOT_FOUND)
     else:
-        total=0
         country_serializer = CountrySerializer(country)
-        for state in country_serializer.data.get("state"):
-            total+=state["patients"]
-        return render(request, template_name='home.html', context={'data': country_serializer.data, 'total' : total})
-
-def get_safety_template(request):
-    return render(request, template_name='safetytips.html')
+        return render(request, template_name='home.html', context={'data': country_serializer.data})
 
 def get_graph_data():
     labels = []
     data = []
-    states = State.objects.all()
+    states = State.objects.order_by("patients")
     serializer = StateSerializer(states, many=True)
     for state in serializer.data:
         labels.append(state["name"])
@@ -81,7 +75,7 @@ def update_data_state_wise():
         confirmed = data.get("statewise")[0].get("confirmed")
         death = data.get("statewise")[0].get("deaths")
         recovered = data.get("statewise")[0].get("recovered")
-        country = Country.objects.get(id=1)
+        country = Country.objects.get(name="India")
         if active_now and confirmed and death and recovered:
             country.death, country.recovered, country.patients, country.active_now   = death, recovered,\
                                                                                        confirmed, active_now
@@ -96,25 +90,41 @@ def update_data_state_wise():
         return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
 
 def update_data_state_district_wise():
-    try:
-        response_data = requests.get(UPDATE_STATE_DISTRICT_DATA_URL)
-        data = response_data.json()
-        for state in data:
-            state_obj = State.objects.filter(name=state).first()
-            if state_obj:
-                district_data = data[state].get("districtData")
-                for dist in district_data:
-                    district = District.objects.filter(state=state_obj.id, name=dist).first()
-                    if district:
-                        dist_data = district_data[dist]
-                        district.patients = dist_data.get("confirmed")
-                        district.save()
-                    else:
-                        dist_data = district_data[dist]
-                        District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
-        return data
-    except Exception as e:
-        return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
+    response_data = requests.get(UPDATE_STATE_DISTRICT_DATA_URL)
+    data = response_data.json()
+    for state in data:
+        state_obj = State.objects.filter(name=state).first()
+        if state_obj:
+            district_data = data[state].get("districtData")
+            for dist in district_data:
+                district = District.objects.filter(state=state_obj.id, name=dist).first()
+                if district:
+                    dist_data = district_data[dist]
+                    district.patients = dist_data.get("confirmed")
+                    district.save()
+                else:
+                    dist_data = district_data[dist]
+                    District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
+    return data
 
 def get_about_page(request):
     return render(request, template_name="about.html")
+
+def get_safety_template(request):
+    return render(request, template_name='safety.html')
+
+def create_country_and_states():
+    try:
+        country = Country.objects.get(name="India")
+        return response(data="for this API first delete the db otherwise object ids will mismatch "
+                             "then ~/.manage.py migrate")
+    except ObjectDoesNotExist:
+        country = Country.objects.create(name="India", population=1354000000)
+    finally:
+        state = State.objects.all()
+        if state:
+            return response(data="for this API first delete the db otherwise object ids will mismatch "
+                                 "then ~/.manage.py migrate")
+        for name, population in INDIAN_STATES.items():
+            State.objects.create(country=country, name=name, population=population)
+        return response(data="created data successfully")

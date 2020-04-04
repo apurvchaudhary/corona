@@ -1,6 +1,8 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from corona_app import utils
 from corona_app.permissions import Check_API_KEY_Auth
+
 
 # Create your views here.
 class CountryView(APIView):
@@ -33,12 +35,25 @@ class StateGraphView(APIView):
         return utils.get_state_graph_data(request)
 
 
-class UpdateDataTask(APIView):
+class UpdateDataView(APIView):
+
     permission_classes = (Check_API_KEY_Auth,)
 
-    def get(self, request):
-        utils.update_data_state_district_wise()
-        return utils.update_data_state_wise()
+    def put(self, request):
+        try:
+            utils.update_data_state_district_wise()
+        except Exception as e:
+            return utils.response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
+        else:
+            return utils.update_data_state_wise()
+
+
+class CreateDataView(APIView):
+
+    permission_classes = (Check_API_KEY_Auth,)
+
+    def post(self, request):
+        return utils.create_country_and_states()
 
 
 class AboutView(APIView):

@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Manager
-from datetime import datetime
+
 
 # Create your models here.
 class ModelBase(models.Model):
@@ -47,7 +47,7 @@ class State(ModelBase):
 
     @property
     def get_district(self):
-        return [dist for dist in self.district_set.all()]
+        return [dist for dist in self.district_set.order_by('patients')]
 
 
 class District(ModelBase):

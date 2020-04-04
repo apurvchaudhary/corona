@@ -35,11 +35,7 @@ span.a {
 body {
   width: 100%;
   margin: 0;
-  background-image: url({{MEDIA_URL}}/media/body_bg.jpg);
-  background-attachment: scroll;
-  background-position: left bottom;
-  background-repeat: repeat;
-  background-size: 100% 100%;
+  background-color: #E8E8E8;
 }
 
 .navbar {
@@ -136,10 +132,10 @@ body {
 </style>
 </head>
 <body>
-<h1 class="blink blink-two" style="float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
-<h1 class="blink blink-two" style="float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
-<center><span class="a"><h1 style="color:#FADBD8;">Country : INDIA</h1></span></center>
-<marquee style="color:#FBFCFC;" bgcolor="#95A5A6">
+<h1 class="blink blink-two" style="color:red;float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 class="blink blink-two" style="color:red;float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<center><span class="a"><h1>State : {{data.name}}</h1></span></center>
+<marquee bgcolor="#95A5A6">
   Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner. These
 whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.</marquee>
 <div class="navbar">
@@ -208,12 +204,12 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 </span>
 <center><table>
     <tr>
-        <th style="color:#AED6F1">Population</th>
-        <th style="color:#641E16">Corona Confirmed Patients in {{data.name}}</th>
+        <th style="color:#ff9900">Population</th>
+        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
-        <th style="color:#641E16">{{data.patients}}</th>
+        <th style="color:red">{{data.patients}}</th>
     </tr>
         <br>
 </table></center>
@@ -221,12 +217,12 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
  <center><table>
     <tr>
         <th style="color:blue">District</th>
-        <th style="color:#641E16">Corona Confirmed Patients in {{data.name}}</th>
+        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
     </tr>
      {% for dist in data.district%}
         <tr>
         <th>{{dist.name}}</th>
-        <th style="color:#641E16">{{dist.patients}}</th>
+        <th style="color:red">{{dist.patients}}</th>
     </tr>
      {% endfor %}
         <br>
@@ -256,7 +252,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Patients',
+                label: 'Patients count',
                 backgroundColor: '#C0392B',
                 data: data.data
               }]
@@ -265,23 +261,24 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
               responsive: true,
               scales: {
               yAxes: [{
-              ticks: {fontColor: "white", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15}
               }],
               xAxes: [{
-              ticks: {fontColor: "white", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15}
               }]
               },
               legend: {
                 position: 'left',
                 labels: {
                 fontSize: 18,
-                fontColor: 'rgb(235, 245, 251)'
+                fontColor: 'rgb(0, 0, 0)',
             }
               },
               title: {
+                position: 'left',
                 display: true,
                 text: 'Corona Patients Across State Statistics Bar Graph',
-                fontColor: 'rgb(235, 245, 251)',
+                fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
             }
