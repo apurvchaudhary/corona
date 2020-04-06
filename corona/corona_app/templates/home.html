@@ -197,10 +197,10 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 </div>
 <span style="color:#FBFCFC">
   <img src="{{ MEDIA_URL }}/media/corona.jpeg"
-       alt="Apurv"
+       alt="Corona"
        style="float: right; padding-right:40px; padding-top:40px;"
-       height="400px"
-       width="400px">
+       height="350px"
+       width="350px">
 </span>
 <br> <center> <table>
     <tr>
@@ -235,7 +235,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 <br><br><br>
         {% block content1 %}
 
-  <div id="container_" style="width: 75%;">
+  <div id="container_" style="width:80%;">
     <canvas id="pie-chart" data-url="{% url 'graph' %}"></canvas>
   </div>
 
@@ -325,14 +325,14 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
               responsive: true,
               scales: {
               yAxes: [{
-              ticks: {fontColor: "black", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15},
               }],
               xAxes: [{
               ticks: {fontColor: "black", fontSize: 15}
               }]
               },
               legend: {
-                position: 'left',
+                position: 'right',
                 labels: {
                 fontSize: 18,
                 fontColor: 'rgb(0, 0, 0)'
