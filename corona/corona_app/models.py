@@ -22,6 +22,7 @@ class Country(ModelBase):
     death = models.IntegerField(default=0)
     active_now = models.IntegerField(default=0)
     patients = models.IntegerField(default=0)
+    help_line_number = models.CharField(max_length=100, blank=True, null=True, default=104)
 
     objects = Manager()
 
@@ -39,6 +40,7 @@ class State(ModelBase):
     name = models.CharField(max_length=255, unique=True)
     population = models.CharField(max_length=100)
     patients = models.IntegerField(default=0)
+    help_line_number = models.CharField(max_length=100, blank=True, null=True, default=104)
 
     objects = Manager()
 
