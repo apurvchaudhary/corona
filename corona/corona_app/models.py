@@ -41,6 +41,9 @@ class State(ModelBase):
     population = models.CharField(max_length=100)
     patients = models.IntegerField(default=0)
     help_line_number = models.CharField(max_length=100, blank=True, null=True, default=104)
+    active_now = models.IntegerField(default=0)
+    death = models.IntegerField(default=0)
+    recovered = models.IntegerField(default=0)
 
     objects = Manager()
 

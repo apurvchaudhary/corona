@@ -84,6 +84,9 @@ def update_data_state_wise():
             state_obj = State.objects.filter(name=state.get("state")).first()
             if state_obj:
                 state_obj.patients = state.get("confirmed")
+                state_obj.death = state.get("deaths")
+                state_obj.recovered = state.get("recovered")
+                state_obj.active_now = state.get("active")
                 state_obj.save()
         return response(data="Updated Successfully")
     except Exception as e:

@@ -14,6 +14,7 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  width: 10px;
 }
 
 tr:nth-child(even) {
@@ -228,12 +229,18 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
         <th style="color:blue">State Name</th>
         <th style="color:#ff9900">Population</th>
         <th style="color:red">Confirmed Corona Patients</th>
+        <th style="color:red">Active (still +ve)</th>
+        <th style="color:green">Recovered</th>
+        <th style="color:#BB3518">Death</th>
     </tr>
 {% for i in data.state%}
         <tr>
         <th>{{i.name}}</th>
         <th>{{i.population}}</th>
         <th style="color:red">{{i.patients}}</th>
+            <th style="color:red">{{i.active_now}}</th>
+        <th style="color:green">{{i.recovered}}</th>
+        <th style="color:#BB3518">{{i.death}}</th>
     </tr>
     {% endfor %}</table></center>
 <br><br><br>

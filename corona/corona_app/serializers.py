@@ -16,7 +16,8 @@ class StateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = State
-        fields = ('id', 'name', 'population', 'patients', 'district', 'help_line_number')
+        fields = ('id', 'name', 'population', 'patients', 'district', 'active_now', 'death',
+                  'recovered', 'help_line_number')
 
     def get_population(self, obj):
         return convert_comma_separated(obj.population)

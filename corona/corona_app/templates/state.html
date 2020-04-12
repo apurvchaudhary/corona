@@ -208,11 +208,17 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 <center><table>
     <tr>
         <th style="color:#ff9900">Population</th>
-        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
+        <th style="color:red">Corona Confirmed Patients</th>
+        <th style="color:red">Active (still +ve)</th>
+        <th style="color:green">Recovered</th>
+        <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
         <th style="color:red">{{data.patients}}</th>
+            <th style="color:red">{{data.active_now}}</th>
+        <th style="color:green">{{data.recovered}}</th>
+        <th style="color:#BB3518">{{data.death}}</th>
     </tr>
         <br>
 </table></center>
@@ -220,7 +226,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
  <center><table>
     <tr>
         <th style="color:blue">District</th>
-        <th style="color:red">Corona Confirmed Patients in {{data.name}}</th>
+        <th style="color:red">Corona Confirmed Patients</th>
     </tr>
      {% for dist in data.district%}
         <tr>
