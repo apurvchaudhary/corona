@@ -112,6 +112,44 @@ body {
   text-align: left;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 .column a:hover {
   background-color: #EC7063;
 }
@@ -133,7 +171,7 @@ body {
 </style>
 </head>
 <body>
-<h1 class="blink blink-two" style="color:red; float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 style="color:red; float: left; padding-left:10px;">Corona Statistics</h1>
 <h1 class="blink blink-two" style="color:red; float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
 <center><span class="a"><h1>Country : INDIA</h1></span></center>
 <marquee bgcolor="#95A5A6">
@@ -208,18 +246,18 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
 </span>
 <br> <center> <table>
     <tr>
-        <th style="color:#ff9900">Population</th>
-        <th style="color:red">Confirmed Corona Patients</th>
-        <th style="color:red">Active (still +ve)</th>
+        <th>Population</th>
+        <th style="color:#ff6666">Confirmed</th>
+        <th style="color:red">Active</th>
         <th style="color:green">Recovered</th>
         <th style="color:#BB3518">Death</th>
     </tr>
         <tr>
         <th>{{data.population}}</th>
-        <th style="color:red">{{data.patients}}</th>
+            <th style="color:#ff6666">{{data.patients}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_confirmed}})<span class="tooltiptext">{{data.delta_confirmed}} confirmed today</span></sup></th>
             <th style="color:red">{{data.active_now}}</th>
-        <th style="color:green">{{data.recovered}}</th>
-        <th style="color:#BB3518">{{data.death}}</th>
+        <th style="color:green">{{data.recovered}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_recovered}})<span class="tooltiptext">{{data.delta_recovered}} recovered today</span></sup></th>
+        <th style="color:#BB3518">{{data.death}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_death}})<span class="tooltiptext">{{data.delta_death}} deceased today</span></sup></th>
     </tr>
 </table></center><br>
 <h4 style="float:right;"></h4>
@@ -227,9 +265,9 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
    <center> <table>
     <tr>
         <th style="color:blue">State Name</th>
-        <th style="color:#ff9900">Population</th>
-        <th style="color:red">Confirmed Corona Patients</th>
-        <th style="color:red">Active (still +ve)</th>
+        <th>Population</th>
+        <th style="color:#ff6666">Confirmed</th>
+        <th style="color:red">Active</th>
         <th style="color:green">Recovered</th>
         <th style="color:#BB3518">Death</th>
     </tr>
@@ -237,7 +275,7 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
         <tr>
         <th>{{i.name}}</th>
         <th>{{i.population}}</th>
-        <th style="color:red">{{i.patients}}</th>
+        <th style="color:#ff6666">{{i.patients}}</th>
             <th style="color:red">{{i.active_now}}</th>
         <th style="color:green">{{i.recovered}}</th>
         <th style="color:#BB3518">{{i.death}}</th>

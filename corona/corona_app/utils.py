@@ -75,10 +75,14 @@ def update_data_state_wise():
         confirmed = data.get("statewise")[0].get("confirmed")
         death = data.get("statewise")[0].get("deaths")
         recovered = data.get("statewise")[0].get("recovered")
+        delta_confirmed = data.get("statewise")[0].get("deltaconfirmed")
+        delta_recovered = data.get("statewise")[0].get("deltarecovered")
+        delta_death = data.get("statewise")[0].get("deltadeaths")
         country = Country.objects.get(name="India")
         if active_now and confirmed and death and recovered:
-            country.death, country.recovered, country.patients, country.active_now   = death, recovered,\
-                                                                                       confirmed, active_now
+            country.death, country.recovered, country.patients, country.active_now,\
+            country.delta_confirmed, country.delta_recovered, country.delta_death = \
+                death, recovered, confirmed, active_now, delta_confirmed, delta_recovered, delta_death
             country.save()
         for state in data.get("statewise")[1:]:
             state_obj = State.objects.filter(name=state.get("state")).first()
@@ -87,6 +91,9 @@ def update_data_state_wise():
                 state_obj.death = state.get("deaths")
                 state_obj.recovered = state.get("recovered")
                 state_obj.active_now = state.get("active")
+                state_obj.delta_confirmed = state.get("deltaconfirmed")
+                state_obj.delta_recovered = state.get("deltarecovered")
+                state_obj.delta_death = state.get("deltadeaths")
                 state_obj.save()
         return response(data="Updated Successfully")
     except Exception as e:

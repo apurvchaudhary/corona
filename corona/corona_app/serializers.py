@@ -17,7 +17,7 @@ class StateSerializer(serializers.ModelSerializer):
     class Meta:
         model = State
         fields = ('id', 'name', 'population', 'patients', 'district', 'active_now', 'death',
-                  'recovered', 'help_line_number')
+                  'recovered', 'help_line_number', 'delta_confirmed', 'delta_recovered', 'delta_death')
 
     def get_population(self, obj):
         return convert_comma_separated(obj.population)
@@ -32,7 +32,7 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ('name', 'population', 'patients', 'state', 'recovered', 'death', 'active_now',
-                  'help_line_number')
+                  'help_line_number', 'delta_confirmed', 'delta_recovered', 'delta_death')
 
     def get_name(self, obj):
         return obj.name.upper()

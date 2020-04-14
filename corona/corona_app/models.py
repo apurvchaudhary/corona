@@ -23,6 +23,9 @@ class Country(ModelBase):
     active_now = models.IntegerField(default=0)
     patients = models.IntegerField(default=0)
     help_line_number = models.CharField(max_length=100, blank=True, null=True, default=104)
+    delta_confirmed = models.IntegerField(default=0)
+    delta_death = models.IntegerField(default=0)
+    delta_recovered = models.IntegerField(default=0)
 
     objects = Manager()
 
@@ -44,6 +47,9 @@ class State(ModelBase):
     active_now = models.IntegerField(default=0)
     death = models.IntegerField(default=0)
     recovered = models.IntegerField(default=0)
+    delta_confirmed = models.IntegerField(default=0)
+    delta_death = models.IntegerField(default=0)
+    delta_recovered = models.IntegerField(default=0)
 
     objects = Manager()
 
