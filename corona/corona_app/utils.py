@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -83,6 +84,7 @@ def update_data_state_wise():
             country.death, country.recovered, country.patients, country.active_now,\
             country.delta_confirmed, country.delta_recovered, country.delta_death = \
                 death, recovered, confirmed, active_now, delta_confirmed, delta_recovered, delta_death
+            country.last_updated = datetime.now()
             country.save()
         for state in data.get("statewise")[1:]:
             state_obj = State.objects.filter(name=state.get("state")).first()

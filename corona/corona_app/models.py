@@ -26,6 +26,7 @@ class Country(ModelBase):
     delta_confirmed = models.IntegerField(default=0)
     delta_death = models.IntegerField(default=0)
     delta_recovered = models.IntegerField(default=0)
+    last_updated = models.DateTimeField()
 
     objects = Manager()
 
