@@ -2,6 +2,9 @@
 *.pyc
 *.sqlite3
 *.DS_Store
+celerybeat-schedule
+dump.rdb
+celerybeat.pid
 
 # ignore folder
 /.idea/
