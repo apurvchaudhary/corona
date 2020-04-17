@@ -24,9 +24,22 @@ class StateSerializer(serializers.ModelSerializer):
         return convert_comma_separated(obj.population)
 
 
+class StateWithoutDistrictSerializer(serializers.ModelSerializer):
+
+    population = serializers.SerializerMethodField()
+
+    class Meta:
+        model = State
+        fields = ('id', 'name', 'population', 'patients', 'active_now', 'death',
+                  'recovered', 'help_line_number', 'delta_confirmed', 'delta_recovered', 'delta_death')
+
+    def get_population(self, obj):
+        return convert_comma_separated(obj.population)
+
+
 class CountrySerializer(serializers.ModelSerializer):
 
-    state  = StateSerializer(source='get_state', many=True)
+    state  = StateWithoutDistrictSerializer(source='get_state', many=True)
     name = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     last_updated = serializers.SerializerMethodField()

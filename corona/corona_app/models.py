@@ -59,7 +59,7 @@ class State(ModelBase):
 
     @property
     def get_district(self):
-        return [dist for dist in self.district_set.order_by('patients')]
+        return [dist for dist in self.district_set.all()]
 
 
 class District(ModelBase):

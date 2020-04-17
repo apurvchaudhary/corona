@@ -21,7 +21,7 @@ def response(data, code=status.HTTP_200_OK):
 
 def get_country_data(request):
     try:
-        country = Country.objects.get(name='India')
+        country = Country.objects.prefetch_related("state_set").filter(name='India').first()
     except ObjectDoesNotExist:
         return response(data="No country with this name", code=status.HTTP_404_NOT_FOUND)
     else:
@@ -31,7 +31,7 @@ def get_country_data(request):
 def get_graph_data():
     labels = []
     data = []
-    states = State.objects.order_by("patients")
+    states = State.objects.order_by("patients").prefetch_related("district_set")
     serializer = StateSerializer(states, many=True)
     for state in serializer.data:
         labels.append(state["name"])
@@ -42,7 +42,7 @@ def get_state_data_by_name(request):
     state_id = request.query_params.get("state_id")
     if state_id:
         try:
-            state = State.objects.get(id=state_id)
+            state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
         except ObjectDoesNotExist:
             return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
         else:
@@ -54,7 +54,7 @@ def get_state_graph_data(request):
     state_id = request.query_params.get("state_id")
     if state_id:
         try:
-            state = State.objects.get(id=state_id)
+            state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
         except ObjectDoesNotExist:
             return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
         else:
