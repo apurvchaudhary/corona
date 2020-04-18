@@ -7,7 +7,8 @@ from rest_framework.response import Response
 
 from corona_app.models import State, Country, District
 from rest_framework import status
-from corona_app.serializers import StateSerializer, CountrySerializer, StateWithoutDistrictSerializer
+from corona_app.serializers import StateSerializer, CountrySerializer,\
+    StateWithoutDistrictSerializer, DistrictSerializer
 from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, \
     INDIAN_STATES
 
@@ -20,6 +21,24 @@ def response(data, code=status.HTTP_200_OK):
     :param error: error message(if any, not compulsory)
     """
     return Response(data=data, status=code)
+
+
+def get_about_page(request):
+    """
+    utility to return rendered about.html
+    param : request
+    return rendered about.html
+    """
+    return render(request, template_name="about.html")
+
+
+def get_safety_template(request):
+    """
+    utility to return rendered safety.html
+    param : request
+    return rendered safety.html
+    """
+    return render(request, template_name='safety.html')
 
 
 def get_country_data(request):
@@ -77,22 +96,18 @@ def get_state_graph_data(request):
     param : request with state_id in query params
     return : json {labels : [], data : []}
     """
-    # TODO only serialize districts
     state_id = request.query_params.get("state_id")
     if state_id:
-        try:
-            state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
-        except ObjectDoesNotExist:
-            return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
-        else:
-            state_serializer = StateSerializer(state)
-            if state_serializer:
-                labels = []
-                data = []
-                for dist in state_serializer.data.get("district"):
-                    labels.append(dist["name"])
-                    data.append(dist["patients"])
-                return response(data={'labels': labels, 'data': data})
+        districts = District.objects.order_by("patients").filter(state_id=state_id)
+        if districts:
+            labels = []
+            data = []
+            district_serializer = DistrictSerializer(districts, many=True)
+            for district in district_serializer.data:
+                labels.append(district["name"])
+                data.append(district["patients"])
+            return response(data={'labels': labels, 'data': data})
+        return response(data="No state with this id", code=status.HTTP_404_NOT_FOUND)
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
 
 
@@ -157,24 +172,6 @@ def update_data_state_district_wise():
                     dist_data = district_data[dist]
                     District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
     return data
-
-
-def get_about_page(request):
-    """
-    utility to return rendered about.html
-    param : request
-    return rendered about.html
-    """
-    return render(request, template_name="about.html")
-
-
-def get_safety_template(request):
-    """
-    utility to return rendered safety.html
-    param : request
-    return rendered safety.html
-    """
-    return render(request, template_name='safety.html')
 
 
 def create_country_and_states():

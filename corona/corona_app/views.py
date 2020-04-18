@@ -55,7 +55,7 @@ class StateView(APIView):
 
 class StateGraphView(APIView):
     """
-    View to get state graph data of all district json {labels : [], data : []}
+    View to get state page graph data of all district json {labels : [], data : []}
     """
     def get(self, request):
         """
