@@ -114,3 +114,27 @@ class AboutView(APIView):
         return : rendered about.html
         """
         return utils.get_about_page(request)
+
+
+class SearchView(APIView):
+    """
+    View to get search page
+    """
+    def get(self, request):
+        """
+        param : get request
+        return : rendered search.html
+        """
+        return utils.get_search_page(request)
+
+
+class SearchDistrictByNameView(APIView):
+    """
+    View to get Searched District name
+    """
+    def get(self, request):
+        """
+        param : get request with district name in query param
+        return : rendered search.html with district serialized data
+        """
+        return utils.get_search_by_name(request)

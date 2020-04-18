@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from corona_app.models import State, Country, District
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer,\
-    StateWithoutDistrictSerializer, DistrictSerializer
+    StateWithoutDistrictSerializer, DistrictSerializer, DistrictWithStateNameSerializer
 from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, \
     INDIAN_STATES
 
@@ -39,6 +39,29 @@ def get_safety_template(request):
     return rendered safety.html
     """
     return render(request, template_name='safety.html')
+
+
+def get_search_page(request):
+    """
+    param : get request
+    return : rendered search.html
+    """
+    return render(request, template_name="search.html")
+
+
+def get_search_by_name(request):
+    """
+    param : get request with name of district in query params
+    return : rendered search.html with (serialized district data or error)
+    """
+    name = request.query_params.get("name")
+    if name:
+        district = District.objects.filter(name__iexact=name).select_related("state")
+        if district:
+            district_serializer = DistrictWithStateNameSerializer(district, many=True)
+            return render(request, template_name="search.html", context={"data" : district_serializer.data})
+        return render(request, template_name="search.html", context={"error" : "Sorry! no district found with this name. "})
+    return render(request, template_name="search.html", context={"error" : "Sorry! empty district name provided. "})
 
 
 def get_country_data(request):

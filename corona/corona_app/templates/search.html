@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{data.name}}</title>
+    <title>Search</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
  table {
@@ -14,6 +14,7 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  width: 10px;
 }
 
 tr:nth-child(even) {
@@ -122,44 +123,6 @@ body {
   clear: both;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .column {
@@ -170,9 +133,9 @@ body {
 </style>
 </head>
 <body>
-<h1 style="color:red;float: left; padding-left:10px;">Corona Statistics</h1>
-<h1 class="blink blink-two" style="color:red;float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
-<center><span class="a"><h1>State : {{data.name}}</h1></span></center>
+<h1 class="blink blink-two" style="color:red; float: left; padding-left:10px;"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 class="blink blink-two" style="color:red; float: right; text-align: left;padding-right:10px"><i class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<center><span class="a"><h1>Country : INDIA</h1></span></center>
 <marquee bgcolor="#95A5A6">
   Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner. These
 whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.</marquee>
@@ -232,111 +195,33 @@ whole stats is for general awareness, does not mean to harm any personel, Kindly
     </div>
   </div>
   <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i>About</a>
-    <a href="{% url 'search' %}"><i class="fa fa-fw fa-search"></i>Search</a>
-    <span style="float:right;font-size:15px;padding-top:10px;padding-right:20px;color:yellow;">
-        {{data.name}} Helpline No. : {{data.help_line_number}}
+  <a href="{% url 'search' %}"><i class="fa fa-fw fa-search"></i>Search</a>
+</div><br><h3>
+<form method='get' action='{% url "search-by-district-name" %}'>{% csrf_token %}
+  <span style="padding-left:50px;">
+    Enter name of <span style="color:blue;">District</span> for specific search :
+  <input size="40" type='text' name='name' value='' />
+  <input type='submit' value='Search District Name'/>
     </span>
-</div>
-<span style="color:#FBFCFC">
-  <img src="{{ MEDIA_URL }}/media/corona.jpeg"
-       alt="Corona"
-       style="float: right; padding-right:40px; padding-top:40px;"
-       height="350px"
-       width="350px">
-</span>
-<center><table>
+</form></h3><br><br>
+{% if data %}
+<center> <table>
     <tr>
-        <th>Population</th>
-        <th style="color:red">Confirmed</th>
-        <th style="color:red">Active</th>
-        <th style="color:green">Recovered</th>
-        <th style="color:#BB3518">Death</th>
+        <th style="color:blue">District Name</th>
+        <th style="color:#ff6666">Confirmed Patients</th>
+      <th>State Name</th>
     </tr>
+{% for d in data %}
         <tr>
-        <th>{{data.population}}</th>
-        <th style="color:red">{{data.patients}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_confirmed}})<span class="tooltiptext">{{data.delta_confirmed}} confirmed today</span></sup></th>
-            <th style="color:red">{{data.active_now}}</th>
-        <th style="color:green">{{data.recovered}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_recovered}})<span class="tooltiptext">{{data.delta_recovered}} recovered today</span></sup></th>
-        <th style="color:#BB3518">{{data.death}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_death}})<span class="tooltiptext">{{data.delta_death}} Deceased today</span></sup></th>
+        <th>{{d.name}}</th>
+        <th>{{d.patients}}</th>
+          <th>{{d.state_name}}</th>
     </tr>
-        <br>
-</table></center>
-<center><h2 >Confirmed in districts of {{data.name}} :-</h2></center>
- <center><table>
-    <tr>
-        <th style="color:blue">District</th>
-        <th style="color:red">Corona Confirmed Patients</th>
-    </tr>
-     {% for dist in data.district%}
-        <tr>
-        <th>{{dist.name}}</th>
-        <th style="color:red">{{dist.patients}}</th>
-    </tr>
-     {% endfor %}
-        <br>
-</table></center>
-<br><br><br>
-{% block content %}
-
-  <div id="container" style="width:80%;">
-    <canvas id="population-chart" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
-
-    $(function () {
-
-      var $populationChart = $("#population-chart");
-      $.ajax({
-        url: $populationChart.data("url"),
-        success: function (data) {
-
-          var ctx = $populationChart[0].getContext("2d");
-
-          new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: data.labels,
-              datasets: [{
-                label: 'Patients count',
-                backgroundColor: '#C0392B',
-                data: data.data
-              }]
-            },
-            options: {
-              responsive: true,
-              scales: {
-              yAxes: [{
-              ticks: {fontColor: "black", fontSize: 15}
-              }],
-              xAxes: [{
-              ticks: {fontColor: "black", fontSize: 15}
-              }]
-              },
-              legend: {
-                position: 'right',
-                labels: {
-                fontSize: 18,
-                fontColor: 'rgb(0, 0, 0)',
-            }
-              },
-              title: {
-                position: 'left',
-                display: true,
-                text: 'Corona Patients Across State Statistics Bar Graph',
-                fontColor: 'rgb(0, 0, 0)',
-                fontSize: 18,
-              }
-            }
-          });
-
-        }
-      });
-
-    });
-  </script>
-{% endblock %}
+    {% endfor %}</table></center>
+{% else %}
+{% if error %}
+<center><h3 style="color:red;">{{error}}</h3></center>
+{% endif %}
+{% endif %}
 </body>
 </html>

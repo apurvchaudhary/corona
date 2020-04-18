@@ -8,10 +8,20 @@ class DistrictSerializer(serializers.ModelSerializer):
     """
     Serializer to serialize district fields i.e name & patients
     """
-
     class Meta:
         model = District
         fields = ('name', 'patients')
+
+
+class DistrictWithStateNameSerializer(serializers.ModelSerializer):
+    """
+    Serializer to serialize district fields i.e name, patients and state_name
+    """
+    state_name = serializers.CharField(source="state.name")
+
+    class Meta:
+        model = District
+        fields = ('name', 'patients', 'state_name')
 
 
 class StateSerializer(serializers.ModelSerializer):
