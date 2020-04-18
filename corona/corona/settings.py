@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '$w2z%yvmdyjxt80cnz7y8poo+@-o4+m2stww89ag)6y5od(@^o'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -81,7 +79,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -100,6 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Update data put API secret key
 API_KEY_SECRET = '****'
 
 # Internationalization
@@ -107,6 +105,7 @@ API_KEY_SECRET = '****'
 
 LANGUAGE_CODE = 'en-us'
 
+# Timezone set to IST as this project mostly consumed by Indian users
 TIME_ZONE = 'ASIA/KOLKATA'
 
 USE_I18N = True
@@ -115,37 +114,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Media files (Images)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# LOGGING = {
-#     'version': 1,
-#     'loggers': {
-#         'django.db.backends': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#         }
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#             'filters': ['require_debug_true'],
-#         }
-#     },
-#     'filters': {
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         }
-#     },
-# }
 
 # CELERY STUFF
 BROKER_URL = 'redis://localhost:6379'

@@ -19,6 +19,7 @@ def response(data, code=status.HTTP_200_OK):
     """
     return Response(data=data, status=code)
 
+
 def get_country_data(request):
     try:
         country = Country.objects.prefetch_related("state_set").filter(name='India').first()
@@ -28,6 +29,7 @@ def get_country_data(request):
         country_serializer = CountrySerializer(country)
         return render(request, template_name='home.html', context={'data': country_serializer.data})
 
+
 def get_graph_data():
     labels = []
     data = []
@@ -36,7 +38,8 @@ def get_graph_data():
     for state in serializer.data:
         labels.append(state["name"])
         data.append(state["patients"])
-    return response(data={'labels' : labels, 'data' : data})
+    return response(data={'labels': labels, 'data': data})
+
 
 def get_state_data_by_name(request):
     state_id = request.query_params.get("state_id")
@@ -47,8 +50,9 @@ def get_state_data_by_name(request):
             return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
         else:
             state_serializer = StateSerializer(state)
-            return render(request, template_name="state.html", context={"data" : state_serializer.data})
+            return render(request, template_name="state.html", context={"data": state_serializer.data})
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
+
 
 def get_state_graph_data(request):
     state_id = request.query_params.get("state_id")
@@ -68,6 +72,7 @@ def get_state_graph_data(request):
                 return response(data={'labels': labels, 'data': data})
     return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
 
+
 def update_data_state_wise():
     try:
         response_data = requests.get(UPDATE_COUNTRY_DATA_URL)
@@ -81,7 +86,7 @@ def update_data_state_wise():
         delta_death = data.get("statewise")[0].get("deltadeaths")
         country = Country.objects.get(name="India")
         if active_now and confirmed and death and recovered:
-            country.death, country.recovered, country.patients, country.active_now,\
+            country.death, country.recovered, country.patients, country.active_now, \
             country.delta_confirmed, country.delta_recovered, country.delta_death = \
                 death, recovered, confirmed, active_now, delta_confirmed, delta_recovered, delta_death
             country.last_updated = datetime.now()
@@ -101,6 +106,7 @@ def update_data_state_wise():
     except Exception as e:
         return response(data=str(e), code=status.HTTP_304_NOT_MODIFIED)
 
+
 def update_data_state_district_wise():
     response_data = requests.get(UPDATE_STATE_DISTRICT_DATA_URL)
     data = response_data.json()
@@ -119,11 +125,14 @@ def update_data_state_district_wise():
                     District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
     return data
 
+
 def get_about_page(request):
     return render(request, template_name="about.html")
 
+
 def get_safety_template(request):
     return render(request, template_name='safety.html')
+
 
 def create_country_and_states():
     try:

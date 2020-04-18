@@ -36,7 +36,6 @@ class StateGraphView(APIView):
 
 
 class UpdateDataView(APIView):
-
     permission_classes = (Check_API_KEY_Auth,)
 
     def put(self, request):
@@ -49,7 +48,6 @@ class UpdateDataView(APIView):
 
 
 class CreateDataView(APIView):
-
     permission_classes = (Check_API_KEY_Auth,)
 
     def post(self, request):

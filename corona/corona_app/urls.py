@@ -1,7 +1,6 @@
 from django.urls import re_path
-from corona_app.views import CountryView, SafetyView, GraphView, StateView, StateGraphView,\
+from corona_app.views import CountryView, SafetyView, GraphView, StateView, StateGraphView, \
     UpdateDataView, AboutView, CreateDataView
-
 
 urlpatterns = [
     re_path(r'^home/$', CountryView.as_view(), name="home"),

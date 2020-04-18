@@ -11,11 +11,10 @@ class ModelBase(models.Model):
     modified_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        abstract=True
+        abstract = True
 
 
 class Country(ModelBase):
-
     name = models.CharField(max_length=255, unique=True)
     population = models.CharField(max_length=255)
     recovered = models.IntegerField(default=0)
@@ -39,7 +38,6 @@ class Country(ModelBase):
 
 
 class State(ModelBase):
-
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
     population = models.CharField(max_length=100)
@@ -63,7 +61,6 @@ class State(ModelBase):
 
 
 class District(ModelBase):
-
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     patients = models.IntegerField()

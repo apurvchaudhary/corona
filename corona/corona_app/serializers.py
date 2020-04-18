@@ -1,17 +1,16 @@
-from rest_framework import  serializers
+from rest_framework import serializers
 from datetime import timedelta
 from corona_app.models import Country, State, District
 from corona_app.services import convert_comma_separated
 
 
 class DistrictSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = District
         fields = ('name', 'patients')
 
-class StateSerializer(serializers.ModelSerializer):
 
+class StateSerializer(serializers.ModelSerializer):
     district = DistrictSerializer(source='get_district', many=True)
     population = serializers.SerializerMethodField()
 
@@ -25,7 +24,6 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class StateWithoutDistrictSerializer(serializers.ModelSerializer):
-
     population = serializers.SerializerMethodField()
 
     class Meta:
@@ -38,8 +36,7 @@ class StateWithoutDistrictSerializer(serializers.ModelSerializer):
 
 
 class CountrySerializer(serializers.ModelSerializer):
-
-    state  = StateWithoutDistrictSerializer(source='get_state', many=True)
+    state = StateWithoutDistrictSerializer(source='get_state', many=True)
     name = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     last_updated = serializers.SerializerMethodField()
@@ -56,5 +53,5 @@ class CountrySerializer(serializers.ModelSerializer):
         return convert_comma_separated(obj.population)
 
     def get_last_updated(self, obj):
-        dt = obj.last_updated + timedelta(0,19800)
+        dt = obj.last_updated + timedelta(0, 19800)
         return dt.strftime("%H:%M")
