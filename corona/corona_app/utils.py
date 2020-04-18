@@ -1,4 +1,5 @@
 import requests
+
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
@@ -7,7 +8,7 @@ from rest_framework.response import Response
 from corona_app.models import State, Country, District
 from rest_framework import status
 from corona_app.serializers import StateSerializer, CountrySerializer, StateWithoutDistrictSerializer
-from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL,\
+from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, \
     INDIAN_STATES
 
 
@@ -22,6 +23,11 @@ def response(data, code=status.HTTP_200_OK):
 
 
 def get_country_data(request):
+    """
+    utility to get home.html with rendered serialized data of country & state model
+    param : request
+    return : rendered home.html or error
+    """
     try:
         country = Country.objects.prefetch_related("state_set").filter(name='India').first()
     except ObjectDoesNotExist:
@@ -32,6 +38,11 @@ def get_country_data(request):
 
 
 def get_home_graph_data():
+    """
+    utility to get home page graph data with serialized state model
+    param : none
+    return : json {labels : [], data : []}
+    """
     labels = []
     data = []
     states = State.objects.order_by("patients")
@@ -43,6 +54,11 @@ def get_home_graph_data():
 
 
 def get_state_data_by_name(request):
+    """
+    utility to get state.html with serialized data of state & district model
+    param : request with state_id in query params
+    return : rendered state.html or error
+    """
     state_id = request.query_params.get("state_id")
     if state_id:
         try:
@@ -56,6 +72,12 @@ def get_state_data_by_name(request):
 
 
 def get_state_graph_data(request):
+    """
+    utility to get state page graph data with serialized district data
+    param : request with state_id in query params
+    return : json {labels : [], data : []}
+    """
+    # TODO only serialize districts
     state_id = request.query_params.get("state_id")
     if state_id:
         try:
@@ -75,6 +97,11 @@ def get_state_graph_data(request):
 
 
 def update_data_state_wise():
+    """
+    utility to update fields of country & state via consuming covid19.org APIs
+    param : none
+    return : success or error
+    """
     try:
         response_data = requests.get(UPDATE_COUNTRY_DATA_URL)
         data = response_data.json()
@@ -109,6 +136,11 @@ def update_data_state_wise():
 
 
 def update_data_state_district_wise():
+    """
+    utility to update fields of district via consuming covid19.org APIs
+    param : none
+    return : success or error
+    """
     response_data = requests.get(UPDATE_STATE_DISTRICT_DATA_URL)
     data = response_data.json()
     for state in data:
@@ -128,14 +160,32 @@ def update_data_state_district_wise():
 
 
 def get_about_page(request):
+    """
+    utility to return rendered about.html
+    param : request
+    return rendered about.html
+    """
     return render(request, template_name="about.html")
 
 
 def get_safety_template(request):
+    """
+    utility to return rendered safety.html
+    param : request
+    return rendered safety.html
+    """
     return render(request, template_name='safety.html')
 
 
 def create_country_and_states():
+    """
+    utility to create country & state in db
+    call this func only when db created newly otherwise row ids will mismatch
+    or else delete db and migrate again and call this func
+    because in template state_id calls are specific to row id in db
+    param : none
+    return : success or error
+    """
     try:
         country = Country.objects.get(name="India")
         return response(data="for this API first delete the db otherwise object ids will mismatch "
