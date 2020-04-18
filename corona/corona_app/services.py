@@ -1,4 +1,9 @@
 def convert_comma_separated(num):
+    """
+    func to convert int to comma separated str
+    params  num (int)
+    return : comma separated str
+    """
     num_list = list(str(num))[::-1]
     if len(num_list) >= 10:
         num_list.insert(3, ",")

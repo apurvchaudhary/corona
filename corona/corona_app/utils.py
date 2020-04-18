@@ -6,8 +6,9 @@ from rest_framework.response import Response
 
 from corona_app.models import State, Country, District
 from rest_framework import status
-from corona_app.serializers import StateSerializer, CountrySerializer
-from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, INDIAN_STATES
+from corona_app.serializers import StateSerializer, CountrySerializer, StateWithoutDistrictSerializer
+from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL,\
+    INDIAN_STATES
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -30,11 +31,11 @@ def get_country_data(request):
         return render(request, template_name='home.html', context={'data': country_serializer.data})
 
 
-def get_graph_data():
+def get_home_graph_data():
     labels = []
     data = []
-    states = State.objects.order_by("patients").prefetch_related("district_set")
-    serializer = StateSerializer(states, many=True)
+    states = State.objects.order_by("patients")
+    serializer = StateWithoutDistrictSerializer(states, many=True)
     for state in serializer.data:
         labels.append(state["name"])
         data.append(state["patients"])
