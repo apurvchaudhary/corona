@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Manager
+from datetime import timedelta
 
 
 # Create your models here.
@@ -39,12 +40,19 @@ class Country(ModelBase):
     delta_confirmed = models.IntegerField(default=0)
     delta_death = models.IntegerField(default=0)
     delta_recovered = models.IntegerField(default=0)
-    last_updated = models.DateTimeField()
 
     objects = Manager()
 
     def __str__(self):
         return f"{self.name}"
+
+    @property
+    def get_last_updated(self):
+        """
+        return IST
+        """
+        dt = self.modified_at + timedelta(0, 19800)
+        return dt.strftime("%H:%M")
 
     @property
     def get_state(self):
