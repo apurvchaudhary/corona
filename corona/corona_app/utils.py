@@ -60,8 +60,9 @@ def get_search_by_name(request):
         if district:
             district_serializer = DistrictWithStateNameSerializer(district, many=True)
             return render(request, template_name="search.html", context={"data" : district_serializer.data})
-        return render(request, template_name="search.html", context={"error" : "Sorry! no district found with this name. "})
-    return render(request, template_name="search.html", context={"error" : "Sorry! empty district name provided. "})
+        return render(request, template_name="search.html", context={"error" : f"Sorry, either no patients in {name.upper()} "
+                                                                               f"or wrong name given"})
+    return render(request, template_name="search.html", context={"error" : "Sorry, empty district name given"})
 
 
 def get_country_data(request):
