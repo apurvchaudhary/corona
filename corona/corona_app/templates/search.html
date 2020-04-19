@@ -223,6 +223,12 @@ body {
     {% if error %}
     <span style="color:red">{{error}}</span>
     {% endif %}
+    {% if related_name %}
+    <br><br>
+    <span style="color:blue">
+        Related suggestions on your search : {{related_name}}
+    </span>
+    {% endif %}
 </div>
 <div style="float:right;">
     <img src="{{ MEDIA_URL }}/media/corona.jpeg"

@@ -56,12 +56,19 @@ def get_search_by_name(request):
     """
     name = request.query_params.get("name")
     if name:
+        related_district_name = None
+        name_char_list = list(name)
         district = District.objects.filter(name__iexact=name).select_related("state")
         if district:
             district_serializer = DistrictWithStateNameSerializer(district, many=True)
             return render(request, template_name="search.html", context={"data" : district_serializer.data})
-        return render(request, template_name="search.html", context={"error" : f"Sorry, either no patients in {name.upper()} "
-                                                                               f"or district spelled incorrectly"})
+        elif len(name_char_list) >= 3:
+            related_district_name = District.objects.filter(name__contains=name).values("name")
+            related_district_name = [district["name"] for district in related_district_name]
+            related_district_name = ", ".join(related_district_name)
+        return render(request, template_name="search.html", context={"error" : f'Sorry, either no patients in "{name}" '
+                                                                               f'or district spelled incorrectly',
+                                                                     "related_name" : related_district_name})
     return render(request, template_name="search.html", context={"error" : "Sorry, empty district name given"})
 
 
