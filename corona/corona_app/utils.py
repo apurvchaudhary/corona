@@ -61,7 +61,7 @@ def get_search_by_name(request):
             district_serializer = DistrictWithStateNameSerializer(district, many=True)
             return render(request, template_name="search.html", context={"data" : district_serializer.data})
         return render(request, template_name="search.html", context={"error" : f"Sorry, either no patients in {name.upper()} "
-                                                                               f"or wrong name given"})
+                                                                               f"or district spelled incorrectly"})
     return render(request, template_name="search.html", context={"error" : "Sorry, empty district name given"})
 
 
