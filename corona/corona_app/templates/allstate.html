@@ -274,58 +274,14 @@ body {
             <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i> About</a>
         </div>
     </div>
-        <span style="float:right;font-size:15px;padding-top:10px;padding-right:20px;color:yellow;">
-        {{data.name}} Helpline No. : {{data.help_line_number}}
-    </span>
 </div>
-<span style="color:#FBFCFC">
-  <img src="{{ MEDIA_URL }}/media/corona.jpeg"
-       alt="Corona"
-       style="float: right; padding-right:40px; padding-top:40px;"
-       height="350px"
-       width="350px">
-</span>
-<center><table>
-    <tr>
-        <th>Population</th>
-        <th style="color:red">Confirmed</th>
-        <th style="color:red">Active</th>
-        <th style="color:green">Recovered</th>
-        <th style="color:#BB3518">Death</th>
-    </tr>
-        <tr>
-        <th>{{data.population}}</th>
-        <th style="color:red">{{data.patients}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_confirmed}})<span class="tooltiptext">{{data.delta_confirmed}} confirmed today</span></sup></th>
-            <th style="color:red">{{data.active_now}}</th>
-        <th style="color:green">{{data.recovered}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_recovered}})<span class="tooltiptext">{{data.delta_recovered}} recovered today</span></sup></th>
-        <th style="color:#BB3518">{{data.death}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_death}})<span class="tooltiptext">{{data.delta_death}} Deceased today</span></sup></th>
-    </tr>
-        <br>
-</table></center>
-<center><h2 >Confirmed in districts of {{data.name}} :-</h2></center>
- <center><table>
-    <tr>
-        <th style="color:blue">District</th>
-        <th style="color:red">Corona Confirmed Patients</th>
-    </tr>
-     {% for dist in data.district%}
-        <tr>
-        <th>{{dist.name}}</th>
-        <th style="color:red">{{dist.patients}}</th>
-    </tr>
-     {% endfor %}
-        <br>
-</table></center>
-<br><br><br>
 {% block content %}
-
-  <div id="container" style="width:80%;">
-    <canvas id="population-chart" data-url="{% url 'state-graph' %}?state_id={{data.id}}"></canvas>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
+<div id="container" style="width: 95%; padding-top:100px;">
+    <canvas id="population-chart" data-url="{% url 'graph' %}"></canvas>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
 
     $(function () {
 
@@ -341,7 +297,7 @@ body {
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Patients count',
+                label: 'Patients Count',
                 backgroundColor: '#C0392B',
                 data: data.data
               }]
@@ -350,23 +306,23 @@ body {
               responsive: true,
               scales: {
               yAxes: [{
-              ticks: {fontColor: "black", fontSize: 15}
+              ticks: {fontColor: "black", fontSize: 15},
               }],
               xAxes: [{
               ticks: {fontColor: "black", fontSize: 15}
               }]
               },
               legend: {
-                position: 'right',
+                position: 'top',
                 labels: {
                 fontSize: 18,
-                fontColor: 'rgb(0, 0, 0)',
+                fontColor: 'rgb(0, 0, 0)'
             }
               },
               title: {
                 position: 'left',
                 display: true,
-                text: 'Corona Patients Across State Statistics Bar Graph',
+                text: 'Corona Patient Across India Statistics Bar Graph',
                 fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
@@ -377,7 +333,9 @@ body {
       });
 
     });
-  </script>
+
+
+</script>
 {% endblock %}
 </body>
 </html>

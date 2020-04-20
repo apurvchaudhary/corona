@@ -117,3 +117,28 @@ class District(ModelBase):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class CaseTimeSeries(ModelBase):
+    """
+    Model to save case time series of corona patients
+    date_str : date string
+    total_confirmed : total confirmed till date
+    total_recovered : total recovered till date
+    total_death : total casualties till date
+    delta_confirmed : confirmed on current date
+    delta_recovered : recovered on current date
+    delta_death : casualties on current date
+    """
+    date_str = models.CharField(max_length=50, unique=True)
+    total_confirmed = models.IntegerField()
+    total_recovered = models.IntegerField()
+    total_death = models.IntegerField()
+    delta_confirmed = models.IntegerField()
+    delta_recovered = models.IntegerField()
+    delta_death = models.IntegerField()
+
+    objects = Manager()
+
+    def __str__(self):
+        return f"{self.date_str} - {self.total_confirmed}"

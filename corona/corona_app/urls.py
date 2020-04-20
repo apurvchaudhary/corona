@@ -1,6 +1,7 @@
 from django.urls import re_path
 from corona_app.views import CountryView, SafetyView, HomeGraphView, StateView, StateGraphView, \
-    UpdateDataView, AboutView, CreateDataView, SearchView, SearchDistrictByNameView
+    UpdateDataView, AboutView, CreateDataView, SearchView, SearchDistrictByNameView, LineGraphView,\
+    AllStateBarGraphView, CaseTimeGraphView
 
 urlpatterns = [
     re_path(r'^home/$', CountryView.as_view(), name="home"),
@@ -14,4 +15,7 @@ urlpatterns = [
     re_path(r'^about/$', AboutView.as_view(), name="about"),
     re_path(r'^search/$', SearchView.as_view(), name="search"),
     re_path(r'^searchdistrictbyname/$', SearchDistrictByNameView.as_view(), name="search-by-district-name"),
+    re_path(r'^getlinedata/$', LineGraphView.as_view(), name="line-graph-data"),
+    re_path(r'^allstatebargraph/$', AllStateBarGraphView.as_view(), name="all-state-bar-graph"),
+    re_path(r'^casetimegraph/$', CaseTimeGraphView.as_view(), name="case-time-graph"),
 ]

@@ -1,7 +1,16 @@
 from rest_framework import serializers
 
-from corona_app.models import Country, State, District
+from corona_app.models import Country, State, District, CaseTimeSeries
 from corona_app.services import convert_comma_separated
+
+
+class CaseTimeSeriesSerializer(serializers.ModelSerializer):
+    """
+    Serializer to serialize case time series fields i.e date_str, total_confirmed etc
+    """
+    class Meta:
+        model = CaseTimeSeries
+        fields = ('date_str', 'total_confirmed', 'total_recovered', 'total_death')
 
 
 class DistrictSerializer(serializers.ModelSerializer):

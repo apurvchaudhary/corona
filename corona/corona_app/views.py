@@ -138,3 +138,27 @@ class SearchDistrictByNameView(APIView):
         return : rendered search.html with district serialized data
         """
         return utils.get_search_by_name(request)
+
+
+class LineGraphView(APIView):
+    """
+    View to get line graph labels & data
+    """
+    def get(self, request):
+        """
+        param : get request
+        return : rendered label & data json
+        """
+        return utils.get_line_graph_data()
+
+
+class AllStateBarGraphView(APIView):
+
+    def get(self, request):
+        return utils.get_all_state_bar_graph_page(request)
+
+
+class CaseTimeGraphView(APIView):
+
+    def get(self, request):
+        return utils.get_case_time_series_graph_page(request)

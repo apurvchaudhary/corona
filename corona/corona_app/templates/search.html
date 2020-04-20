@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
  table {
@@ -94,6 +94,32 @@ body {
   display: block;
 }
 
+.dropdown-content-new {
+  display: none;
+  position: absolute;
+  background-color: #cccccc;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content-new a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content-new a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content-new {
+  display: block;
+}
+
 /* Create three equal columns that floats next to each other */
 .column {
   float: left;
@@ -110,6 +136,44 @@ body {
   text-decoration: none;
   display: block;
   text-align: left;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 .column a:hover {
@@ -132,33 +196,22 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
     </style>
 </head>
 <body>
-<h1 class="blink blink-two" style="color:red; float: left; padding-left:10px;"><i
-        class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
+<h1 style="color:red; float: left; padding-left:10px;">Corona Statistics</h1>
 <h1 class="blink blink-two" style="color:red; float: right; text-align: left;padding-right:10px"><i
         class="fa fa-fw fa-exclamation-triangle"></i>Stay Home Stay Safe</h1>
 <center><span class="a"><h1>Country : INDIA</h1></span></center>
 <marquee bgcolor="#95A5A6">
-    Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly
-    manner. These
+    Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner.
+    These
     whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.
 </marquee>
 <div class="navbar">
     <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i> Safety Tips</a>
     <div class="dropdown">
-        <button class="dropbtn"><i class="fa fa-fw fa-bar-chart"></i> States Statistics
+        <button class="dropbtn"><i class="fa fa-fw fa-bar-chart"></i> States
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -209,8 +262,18 @@ body {
             </div>
         </div>
     </div>
-    <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i>About</a>
-    <a href="{% url 'search' %}"><i class="fa fa-fw fa-search"></i>Search</a>
+    <a href="{% url 'safety-tips' %}"><i class="fa fa-fw fa-info"></i>Safety Tips</a>
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-fw fa-list"></i> Additional
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content-new">
+            <a href="{% url 'search' %}"><i class="fa fa-fw fa-search"></i>District</a>
+            <a href="{% url 'all-state-bar-graph' %}"><i class="fa fa-fw fa-bar-chart"></i>States</a>
+            <a href="{% url 'case-time-graph' %}"><i class="fa fa-fw fa-line-chart"></i> Dates</a>
+            <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i> About</a>
+        </div>
+    </div>
 </div>
 <div style="float:left;padding-left:40px;padding-top:20px;">
     <form method='get' action='{% url "search-by-district-name" %}'>{% csrf_token %}
