@@ -1,16 +1,15 @@
-import requests
-
 from datetime import datetime
+
+import requests
+from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from rest_framework import status
 from rest_framework.response import Response
 
+from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, INDIAN_STATES
 from corona_app.models import State, Country, District, CaseTimeSeries
-from rest_framework import status
-from corona_app.serializers import StateSerializer, CountrySerializer,\
-    StateWithoutDistrictSerializer, DistrictSerializer, DistrictWithStateNameSerializer, CaseTimeSeriesSerializer
-from corona_app.constants import UPDATE_COUNTRY_DATA_URL, UPDATE_STATE_DISTRICT_DATA_URL, \
-    INDIAN_STATES
+from corona_app.serializers import StateSerializer, CountrySerializer, StateWithoutDistrictSerializer,\
+    DistrictWithStateNameSerializer, CaseTimeSeriesSerializer
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -23,84 +22,35 @@ def response(data, code=status.HTTP_200_OK):
     return Response(data=data, status=code)
 
 
-def get_about_page(request):
-    """
-    utility to return rendered about.html
-    param : request
-    return rendered about.html
-    """
-    return render(request, template_name="about.html")
-
-
-def get_safety_template(request):
-    """
-    utility to return rendered safety.html
-    param : request
-    return rendered safety.html
-    """
-    return render(request, template_name='safety.html')
-
-
-def get_search_page(request):
-    """
-    param : get request
-    return : rendered search.html
-    """
-    return render(request, template_name="search.html")
-
-
-def get_all_state_bar_graph_page(request):
-    return render(request, template_name="allstate.html")
-
-
-def get_case_time_series_graph_page(request):
-    return render(request, template_name="casetime.html")
-
-
-def get_search_by_name(request):
+def get_search_by_name(name):
     """
     param : get request with name of district in query params
     return : rendered search.html with (serialized district data or error)
     """
-    name = request.query_params.get("name")
-    if name:
-        related_district_name = None
-        name_char_list = list(name)
-        district = District.objects.filter(name__iexact=name).select_related("state")
-        if district:
-            district_serializer = DistrictWithStateNameSerializer(district, many=True)
-            return render(request, template_name="search.html", context={"data" : district_serializer.data})
-        elif len(name_char_list) >= 3:
-            related_district_name = District.objects.filter(name__contains=name).values("name")
+    name_char_list = list(name)
+    error = f"Sorry, either no patients in '{name}' or district spelled incorrectly"
+    district = District.objects.filter(name__iexact=name).select_related("state")
+    if district:
+        district_serializer = DistrictWithStateNameSerializer(district, many=True)
+        return district_serializer.data, None, None
+    elif len(name_char_list) >= 3:
+        related_district_name = District.objects.filter(name__contains=name).values("name")
+        if related_district_name:
             related_district_name = [district["name"] for district in related_district_name]
             related_district_name = ", ".join(related_district_name)
-        return render(request, template_name="search.html", context={"error" : f'Sorry, either no patients in "{name}" '
-                                                                               f'or district spelled incorrectly',
-                                                                     "related_name" : related_district_name})
-    return render(request, template_name="search.html", context={"error" : "Sorry, empty district name given"})
+        else:
+            related_district_name = None
+        return None, error, related_district_name
+    return None, error, None
 
 
-def get_country_data(request):
-    """
-    utility to get home.html with rendered serialized data of country & state model
-    param : request
-    return : rendered home.html or error
-    """
-    try:
-        country = Country.objects.prefetch_related("state_set").filter(name='India').first()
-    except ObjectDoesNotExist:
-        return response(data="No country with this name", code=status.HTTP_404_NOT_FOUND)
-    else:
-        country_serializer = CountrySerializer(country)
-        return render(request, template_name='home.html', context={'data': country_serializer.data})
+def get_country_data():
+    country = Country.objects.prefetch_related("state_set").filter(name='India').first()
+    country_serializer = CountrySerializer(country)
+    return country_serializer.data
 
 
-def get_home_graph_data():
-    """
-    utility to get home page graph data with serialized state model
-    param : none
-    return : json {labels : [], data : []}
-    """
+def get_all_state_label_and_data():
     labels = []
     data = []
     states = State.objects.order_by("patients")
@@ -108,46 +58,13 @@ def get_home_graph_data():
     for state in serializer.data:
         labels.append(state["name"])
         data.append(state["patients"])
-    return response(data={'labels': labels, 'data': data})
+    return {'labels': labels, 'data': data}
 
 
-def get_state_data_by_name(request):
-    """
-    utility to get state.html with serialized data of state & district model
-    param : request with state_id in query params
-    return : rendered state.html or error
-    """
-    state_id = request.query_params.get("state_id")
-    if state_id:
-        try:
-            state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
-        except ObjectDoesNotExist:
-            return response(data="No state with this name", code=status.HTTP_404_NOT_FOUND)
-        else:
-            state_serializer = StateSerializer(state)
-            return render(request, template_name="state.html", context={"data": state_serializer.data})
-    return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
-
-
-def get_state_graph_data(request):
-    """
-    utility to get state page graph data with serialized district data
-    param : request with state_id in query params
-    return : json {labels : [], data : []}
-    """
-    state_id = request.query_params.get("state_id")
-    if state_id:
-        districts = District.objects.order_by("patients").filter(state_id=state_id)
-        if districts:
-            labels = []
-            data = []
-            district_serializer = DistrictSerializer(districts, many=True)
-            for district in district_serializer.data:
-                labels.append(district["name"])
-                data.append(district["patients"])
-            return response(data={'labels': labels, 'data': data})
-        return response(data="No state with this id", code=status.HTTP_404_NOT_FOUND)
-    return response(data="No state id given", code=status.HTTP_400_BAD_REQUEST)
+def get_state_data_by_id(state_id):
+    state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
+    state_serializer = StateSerializer(state)
+    return state_serializer.data
 
 
 def get_line_graph_data():
@@ -167,8 +84,8 @@ def get_line_graph_data():
         total_confirmed.append(case["total_confirmed"])
         total_recovered.append(case["total_recovered"])
         total_death.append(case["total_death"])
-    return response(data={"labels" : labels, "total_confirmed" : total_confirmed,
-                          "total_recovered" : total_recovered, "total_death" : total_death})
+    return {"labels": labels, "total_confirmed": total_confirmed, "total_recovered": total_recovered,
+            "total_death": total_death}
 
 
 def update_data_state_wise():
@@ -205,6 +122,9 @@ def update_data_state_wise():
             state_obj.delta_recovered = state.get("deltarecovered")
             state_obj.delta_death = state.get("deltadeaths")
             state_obj.save()
+    if "corona_home" in cache:
+        cache.delete("corona_home")
+    cache.set("corona_home", get_country_data())
     return response(data="Updated Successfully")
 
 
@@ -229,12 +149,18 @@ def update_data_state_district_wise():
                 else:
                     dist_data = district_data[dist]
                     District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
+            if "stateid:" + state_obj.id in cache:
+                cache.delete("stateid:" + state_obj.id)
+            cache.set("stateid:" + state_obj.id, get_state_data_by_id(state_obj.id))
+    if "all_state_label_data" in cache:
+        cache.delete("all_state_label_data")
+    cache.set("all_state_label_data", get_all_state_label_and_data())
     return data
 
 
 def update_case_time_series(cases_time_series):
     """
-    utility to update/create case time series via consuming covid19.org APIs
+    utility to update/create case time series via consuming covid19.org APIs and set cache
     param : response_data
     return : none
     """
@@ -243,9 +169,14 @@ def update_case_time_series(cases_time_series):
             CaseTimeSeries.objects.get(date_str=case.get("date"))
         except ObjectDoesNotExist:
             CaseTimeSeries.objects.create(date_str=case.get("date"), total_confirmed=case.get("totalconfirmed"),
-                                          total_recovered=case.get("totalrecovered"), total_death=case.get("totaldeceased"),
-                                          delta_confirmed=case.get("dailyconfirmed"), delta_recovered=case.get("dailyrecovered"),
+                                          total_recovered=case.get("totalrecovered"),
+                                          total_death=case.get("totaldeceased"),
+                                          delta_confirmed=case.get("dailyconfirmed"),
+                                          delta_recovered=case.get("dailyrecovered"),
                                           delta_death=case.get("dailydeceased"))
+    if "case_time_line_graph_data" in cache:
+        cache.delete("case_time_line_graph_data")
+    cache.set("case_time_line_graph_data", get_line_graph_data())
 
 
 def create_country_and_states():

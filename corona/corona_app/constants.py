@@ -1,3 +1,7 @@
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+
+
 # update state district wise data url
 UPDATE_STATE_DISTRICT_DATA_URL = "https://api.covid19india.org/state_district_wise.json"
 # update country with state data url
@@ -39,3 +43,5 @@ INDIAN_STATES = {
     "Daman and Diu": 243247,
     "Lakshadweep": 64429,
 }
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
