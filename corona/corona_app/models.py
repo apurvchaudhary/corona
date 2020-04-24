@@ -43,9 +43,6 @@ class Country(ModelBase):
 
     objects = Manager()
 
-    def __str__(self):
-        return f"{self.name}"
-
     @property
     def get_last_updated(self):
         """
@@ -91,9 +88,6 @@ class State(ModelBase):
 
     objects = Manager()
 
-    def __str__(self):
-        return f"{self.name} - {self.patients}"
-
     @property
     def get_district(self):
         """
@@ -114,9 +108,6 @@ class District(ModelBase):
     patients = models.IntegerField()
 
     objects = Manager()
-
-    def __str__(self):
-        return f"{self.name}"
 
 
 class CaseTimeSeries(ModelBase):
@@ -139,6 +130,3 @@ class CaseTimeSeries(ModelBase):
     delta_death = models.IntegerField()
 
     objects = Manager()
-
-    def __str__(self):
-        return f"{self.date_str} - {self.total_confirmed}"
