@@ -125,6 +125,9 @@ def update_data_state_wise():
     if "corona_home" in cache:
         cache.delete("corona_home")
     cache.set("corona_home", get_country_data())
+    if "all_state_label_data" in cache:
+        cache.delete("all_state_label_data")
+    cache.set("all_state_label_data", get_all_state_label_and_data())
     return response(data="Updated Successfully")
 
 
@@ -149,12 +152,10 @@ def update_data_state_district_wise():
                 else:
                     dist_data = district_data[dist]
                     District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
-            if "stateid:" + state_obj.id in cache:
-                cache.delete("stateid:" + state_obj.id)
-            cache.set("stateid:" + state_obj.id, get_state_data_by_id(state_obj.id))
-    if "all_state_label_data" in cache:
-        cache.delete("all_state_label_data")
-    cache.set("all_state_label_data", get_all_state_label_and_data())
+            key = "stateid:" + str(state_obj.id)
+            if key in cache:
+                cache.delete(key)
+            cache.set(key, get_state_data_by_id(state_obj.id))
     return data
 
 
