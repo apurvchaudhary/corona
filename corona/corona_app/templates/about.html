@@ -1,206 +1,22 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-    #borderimg2 {
-  border: 10px solid transparent;
-  padding: 10px;
-}
- table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 60%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-  width: 10px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-span.a {
-  display: inline-block;
-}
-.blink-two {
-      animation: blinker-two 1.4s linear infinite;
-      }
-      @keyframes blinker-two {
-      100% { opacity: 0; }
-      }
-* {
-  box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  margin: 0;
-  background-color: #E8E8E8;
-}
-
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  width: 80%;
-  left: 0;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content .header {
-  background: red;
-  padding: 16px;
-  color: white;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-content-new {
-  display: none;
-  position: absolute;
-  background-color: #cccccc;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content-new a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content-new a:hover {
-  background-color: #EC7063;
-}
-
-.dropdown:hover .dropdown-content-new {
-  display: block;
-}
-
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 20%;
-  background-color: #ccc;
-  height: 360px;
-}
-
-.column a {
-  float: none;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
-.column a:hover {
-  background-color: #EC7063;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    height: auto;
-  }
-}
-
-
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 </head>
+<style>
+#borderedimg {
+  float:right;
+  border-radius: 25px;
+  border: 2px solid black;
+  height: 300px;
+  width: 230px;
+  background: url({% static 'images/apurv.jpg' %});
+  background-size: cover;
+}
+</style>
 <body>
 <h1 style="color:red; float: left; padding-left:10px;">Corona Statistics</h1>
 <h1 class="blink blink-two" style="color:red; float: right; text-align: left;padding-right:10px"><i
@@ -208,8 +24,7 @@ body {
 <center><span class="a"><h1>Country : INDIA</h1></span></center>
 <marquee bgcolor="#95A5A6">
     Hi these all figures are fetching from covid19.org of India, on which current patient is showing in hourly manner.
-    These
-    whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.
+    These whole stats is for general awareness, does not mean to harm any personel, Kindly go through safety tips.
 </marquee>
 <div class="navbar">
     <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
@@ -278,33 +93,28 @@ body {
         </div>
     </div>
 </div>
-<p style="float: left"><div id="borderimg2">
-    <img src="{{ MEDIA_URL }}/corona/media/apurv.jpg"
-         border="4"
-         alt="Apurv"
-         style="float: right"
-         width="250px"
-         height="320px">
-    <ul style="font-size:18px;">
-        <li>This is open source contribution by me solely, which does not meant to harm or
+<div style="padding-top:20px;padding-right:20px;">
+    <div id="borderedimg"></div>
+    <div style="float:left;"></div></div>
+<ul style="font-size:18px;">
+    <li>This is open source contribution by me solely, which does not meant to harm or
         terrify any (religion, cast, individual).This whole site is just developed to visualize and project the current circumstances
-            and countings of country, state, district corona confirmed patients.</li><br>
-        <li>Whole idea behind this is just to project the data of corona patients in our
+        and countings of country, state, district corona confirmed patients.</li><br>
+    <li>Whole idea behind this is just to project the data of corona patients in our
         country, state, district.</li><br>
-        <li>These whole digits are not fake or created without knowledge, all counts are getting fetched on periodic basis from covid19
-            official site "covid19india.org"</li><br>
-        <li>Do not get panic about current situation as you can take precautions provided by WHO on
-            <a style="color:blue;" href="{% url 'safety-tips' %}"><b style="color:blue;">Safety Precautions</b></a>
-        </li><br>
-        <li>Eat healthy, clean, fruits & vegetables. Work out at home on daily routine basis.</li><br>
-        <li>Stay home Stay safe, as this virus is transit infectious.</li><br>
-        <li><b>For any query related to website kindly contact:</b></li><br>
-        <ul>
-            <li>My github link : <a href="https://github.com/apurvchaudhary" target="_blank"><b style="color:blue;">GitHub</b></a></li><br>
-            <li>My linkedin profile link : <a href="https://www.linkedin.com/in/apurv-chaudhary-9b0b7372/" target="_blank"><b style="color:blue;">Linkedin</b></a></li><br>
-            <li>Also you can write me on : <b>apurv.sirohi@gmail.com</b></li><br>
-        </ul>
-    </ul></div>
-</p>
+    <li>These whole digits are not fake or created without knowledge, all counts are getting fetched on periodic basis from covid19
+        official site "covid19india.org"</li><br>
+    <li>Do not get panic about current situation as you can take precautions provided by WHO on
+        <a href="{% url 'safety-tips' %}" style="color:blue;"><b style="color:blue;">Safety Precautions</b></a>
+    </li><br>
+    <li>Eat healthy, clean, fruits & vegetables. Work out at home on daily routine basis.</li><br>
+    <li>Stay home Stay safe, as this virus is transit infectious.</li><br>
+    <li><b>For any query related to website kindly contact:</b></li><br>
+    <ul>
+        <li>My github link : <a href="https://github.com/apurvchaudhary" target="_blank"><b style="color:blue;">GitHub</b></a></li><br>
+        <li>My linkedin profile link : <a href="https://www.linkedin.com/in/apurv-chaudhary-9b0b7372/" target="_blank"><b style="color:blue;">Linkedin</b></a></li><br>
+        <li>Also you can write me on : <b>apurv.sirohi@gmail.com</b></li><br>
+    </ul>
+</ul>
 </body>
 </html>
