@@ -122,11 +122,7 @@ def update_data_state_wise():
             state_obj.delta_recovered = state.get("deltarecovered")
             state_obj.delta_death = state.get("deltadeaths")
             state_obj.save()
-    if "corona_home" in cache:
-        cache.delete("corona_home")
     cache.set("corona_home", get_country_data())
-    if "all_state_label_data" in cache:
-        cache.delete("all_state_label_data")
     cache.set("all_state_label_data", get_all_state_label_and_data())
     return response(data="Updated Successfully")
 
@@ -153,8 +149,6 @@ def update_data_state_district_wise():
                     dist_data = district_data[dist]
                     District.objects.create(state=state_obj, name=dist, patients=dist_data.get("confirmed"))
             key = "stateid:" + str(state_obj.id)
-            if key in cache:
-                cache.delete(key)
             cache.set(key, get_state_data_by_id(state_obj.id))
     return data
 
@@ -175,8 +169,6 @@ def update_case_time_series(cases_time_series):
                                           delta_confirmed=case.get("dailyconfirmed"),
                                           delta_recovered=case.get("dailyrecovered"),
                                           delta_death=case.get("dailydeceased"))
-    if "case_time_line_graph_data" in cache:
-        cache.delete("case_time_line_graph_data")
     cache.set("case_time_line_graph_data", get_line_graph_data())
 
 
