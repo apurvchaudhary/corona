@@ -13,3 +13,4 @@ wsgi.py
 # ignore folders
 /.idea/
 static/
+# My gitignore file
