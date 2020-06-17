@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from corona_app import utils
 from corona_app.constants import CACHE_TTL
 from corona_app.permissions import Check_API_KEY_Auth
+from corona.settings import GLOBAL_HOME_URL
 
 
 def response(data, code=status.HTTP_200_OK):
@@ -36,7 +37,7 @@ def about_view(request):
     """
     View to get about page
     """
-    return render(request, template_name="about.html")
+    return render(request, template_name="about.html", context={"global_home" : GLOBAL_HOME_URL})
 
 
 @api_view()
