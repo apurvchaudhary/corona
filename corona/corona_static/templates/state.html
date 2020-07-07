@@ -82,7 +82,7 @@
             <a href="{% url 'about' %}"><i class="fa fa-fw fa-user-circle-o"></i> About</a>
         </div>
     </div>
-        <span style="float:right;font-size:15px;padding-top:10px;padding-right:20px;color:yellow;">
+    <span style="float:right;font-size:15px;padding-top:10px;padding-right:20px;color:yellow;">
         {{data.name}} Helpline No. : {{data.help_line_number}}
     </span>
 </div>
@@ -93,37 +93,58 @@
        style="float: right; padding-right:40px; padding-top:40px;"
        width="350px">
 </span>
-<center><table>
-    <tr>
-        <th>Population</th>
-        <th style="color:red">Confirmed</th>
-        <th style="color:red">Active</th>
-        <th style="color:green">Recovered</th>
-        <th style="color:#BB3518">Death</th>
-    </tr>
+<center>
+    <table>
         <tr>
-        <th>{{data.population}}</th>
-        <th style="color:red">{{data.patients}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_confirmed}})<span class="tooltiptext">{{data.delta_confirmed}} confirmed today</span></sup></th>
+            <th>Population</th>
+            <th style="color:red">Confirmed</th>
+            <th style="color:red">Active</th>
+            <th style="color:green">Recovered</th>
+            <th style="color:#BB3518">Death</th>
+        </tr>
+        <tr>
+            <th>{{data.population}}</th>
+            <th style="color:red">{{data.patients}} &nbsp<sup class="tooltip" style="color:black;">
+                (+{{data.delta_confirmed}})<span
+                    class="tooltiptext">{{data.delta_confirmed}} Confirmed today</span></sup></th>
             <th style="color:red">{{data.active_now}}</th>
-        <th style="color:green">{{data.recovered}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_recovered}})<span class="tooltiptext">{{data.delta_recovered}} recovered today</span></sup></th>
-        <th style="color:#BB3518">{{data.death}} &nbsp<sup class="tooltip" style="color:black;"> (+{{data.delta_death}})<span class="tooltiptext">{{data.delta_death}} Deceased today</span></sup></th>
-    </tr>
+            <th style="color:green">{{data.recovered}} &nbsp<sup class="tooltip" style="color:black;">
+                (+{{data.delta_recovered}})<span
+                    class="tooltiptext">{{data.delta_recovered}} Recovered today</span></sup></th>
+            <th style="color:#BB3518">{{data.death}} &nbsp<sup class="tooltip" style="color:black;">
+                (+{{data.delta_death}})<span class="tooltiptext">{{data.delta_death}} Deceased today</span></sup></th>
+        </tr>
         <br>
-</table></center>
-<center><h2 >Confirmed in districts of {{data.name}} :-</h2></center>
- <center><table>
-    <tr>
-        <th style="color:blue">District</th>
-        <th style="color:red">Corona Confirmed Patients</th>
-    </tr>
-     {% for dist in data.district%}
+    </table>
+</center>
+<center><h2>Confirmed in districts of {{data.name}} :-</h2></center>
+<center>
+    <table>
         <tr>
-        <th>{{dist.name}}</th>
-        <th style="color:red">{{dist.patients}}</th>
-    </tr>
-     {% endfor %}
+            <th style="color:blue">District</th>
+            <th style="color:red">Confirmed</th>
+            <th style="color:red">Active</th>
+            <th style="color:green">Recovered</th>
+            <th style="color:#BB3518">Death</th>
+        </tr>
+        {% for dist in data.district%}
+        <tr>
+            <th>{{dist.name}}</th>
+            <th style="color:red">{{dist.patients}}&nbsp<sup class="tooltip" style="color:black;font-size:12px;">
+                (+{{dist.delta_confirmed}})<span
+                    class="tooltiptext">{{dist.delta_confirmed}} Confirmed today</span></sup></th>
+            <th style="color:red">{{dist.active_now}}</th>
+            <th style="color:green">{{dist.recovered}}&nbsp<sup class="tooltip" style="color:black;font-size:12px;">
+                (+{{dist.delta_recovered}})<span
+                    class="tooltiptext">{{dist.delta_recovered}} Recovered today</span></sup></th>
+            <th style="color:#BB3518">{{dist.death}}&nbsp<sup class="tooltip" style="color:black;font-size:12px;">
+                (+{{dist.delta_death}})<span
+                    class="tooltiptext">{{dist.delta_death}} Deceased today</span></sup></th>
+        </tr>
+        {% endfor %}
         <br>
-</table></center>
+    </table>
+</center>
 <br><br><br>
 {% block content %}
 <div id="container" style="width:80%;">

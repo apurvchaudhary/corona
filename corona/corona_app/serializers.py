@@ -19,7 +19,8 @@ class DistrictSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = District
-        fields = ('name', 'patients')
+        fields = ('name', 'patients', 'active_now', 'death', 'recovered', 'delta_confirmed', 'delta_death',
+                  'delta_recovered')
 
 
 class DistrictWithStateNameSerializer(serializers.ModelSerializer):
@@ -30,7 +31,8 @@ class DistrictWithStateNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('name', 'patients', 'state_name')
+        fields = ('name', 'patients', 'state_name', 'active_now', 'death', 'recovered', 'delta_confirmed', 'delta_death',
+                  'delta_recovered')
 
 
 class StateSerializer(serializers.ModelSerializer):
@@ -45,9 +47,8 @@ class StateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = State
-        fields = ('id', 'name', 'population', 'patients', 'active_now', 'death',
-                  'recovered', 'help_line_number', 'delta_confirmed', 'delta_recovered',
-                  'delta_death', 'district')
+        fields = ('id', 'name', 'population', 'patients', 'active_now', 'death', 'recovered', 'help_line_number',
+                  'delta_confirmed', 'delta_recovered', 'delta_death', 'district')
 
     def get_population(self, obj):
         """
@@ -94,9 +95,8 @@ class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
-        fields = ('name', 'population', 'patients', 'recovered', 'death', 'active_now',
-                  'help_line_number', 'delta_confirmed', 'delta_recovered', 'delta_death',
-                  'last_updated', 'state')
+        fields = ('name', 'population', 'patients', 'recovered', 'death', 'active_now', 'help_line_number',
+                  'delta_confirmed', 'delta_recovered', 'delta_death', 'last_updated', 'state')
 
     def get_population(self, obj):
         """

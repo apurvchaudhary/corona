@@ -32,7 +32,7 @@
               title: {
                 position: 'left',
                 display: true,
-                text: 'Corona Patient Across India Statistics Pie Chart',
+                text: 'Corona Active Patients Across India Statistics Pie Chart',
                 fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
@@ -53,7 +53,7 @@ $(function () {
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Patients Count',
+                label: 'Active Patients',
                 backgroundColor: '#C0392B',
                 data: data.data
               }]
@@ -78,7 +78,7 @@ $(function () {
               title: {
                 position: 'left',
                 display: true,
-                text: 'Corona Patient Across India Statistics Bar Graph',
+                text: 'Corona Active Patient Statistics Bar Graph',
                 fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }
@@ -141,7 +141,7 @@ $(function () {
               title: {
                 position: 'left',
                 display: true,
-                text: 'Corona Patient Across India Statistics Bar Graph',
+                text: 'Corona Patient Across India Statistics Date wise line chart',
                 fontColor: 'rgb(0, 0, 0)',
                 fontSize: 18,
               }

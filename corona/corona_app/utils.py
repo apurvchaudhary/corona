@@ -53,11 +53,11 @@ def get_country_data():
 def get_all_state_label_and_data():
     labels = []
     data = []
-    states = State.objects.order_by("patients")
+    states = State.objects.order_by("active_now")
     serializer = StateWithoutDistrictSerializer(states, many=True)
     for state in serializer.data:
         labels.append(state["name"])
-        data.append(state["patients"])
+        data.append(state["active_now"])
     return {'labels': labels, 'data': data}
 
 
@@ -144,6 +144,12 @@ def update_data_state_district_wise():
                 if district:
                     dist_data = district_data[dist]
                     district.patients = dist_data.get("confirmed")
+                    district.active_now = dist_data.get("active")
+                    district.death = dist_data.get("deceased")
+                    district.recovered = dist_data.get("recovered")
+                    district.delta_confirmed = dist_data.get("delta").get("confirmed")
+                    district.delta_death = dist_data.get("delta").get("deceased")
+                    district.delta_recovered = dist_data.get("delta").get("recovered")
                     district.save()
                 else:
                     dist_data = district_data[dist]

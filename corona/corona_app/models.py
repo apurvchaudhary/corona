@@ -106,6 +106,12 @@ class District(ModelBase):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     patients = models.IntegerField()
+    active_now = models.IntegerField(default=0)
+    death = models.IntegerField(default=0)
+    recovered = models.IntegerField(default=0)
+    delta_confirmed = models.IntegerField(default=0)
+    delta_death = models.IntegerField(default=0)
+    delta_recovered = models.IntegerField(default=0)
 
     objects = Manager()
 

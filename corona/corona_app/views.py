@@ -136,7 +136,7 @@ class DistrictLabelDataView(APIView):
                 data = cache.get("stateid:" + state_id)
                 for district in data["district"]:
                     labels.append(district["name"])
-                    values.append(district["patients"])
+                    values.append(district["active_now"])
                 return response(data={"labels": labels, "data": values})
             response(data="No state_id in cache", code=status.HTTP_404_NOT_FOUND)
         response(data="No state_id provided", code=status.HTTP_400_BAD_REQUEST)
