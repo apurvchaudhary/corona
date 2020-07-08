@@ -129,12 +129,18 @@ class DistrictLabelDataView(APIView):
         return : json of labels and their data
         """
         state_id = request.query_params.get("state_id")
+        big_state = request.query_params.get("big_state")
         if state_id:
             labels = []
             values = []
             if "stateid:" + state_id in cache:
                 data = cache.get("stateid:" + state_id)
-                for district in data["district"]:
+                if big_state:
+                    for district in data["district"][38:]:
+                        labels.append(district["name"])
+                        values.append(district["active_now"])
+                    return response(data={"labels": labels, "data": values})
+                for district in data["district"][:38]:
                     labels.append(district["name"])
                     values.append(district["active_now"])
                 return response(data={"labels": labels, "data": values})

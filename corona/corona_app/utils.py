@@ -64,6 +64,9 @@ def get_all_state_label_and_data():
 def get_state_data_by_id(state_id):
     state = State.objects.prefetch_related("district_set").filter(id=state_id).first()
     state_serializer = StateSerializer(state)
+    if len(state_serializer.data["district"]) > 38:
+        state_serializer = {"big_state" : True, **state_serializer.data}
+        return state_serializer
     return state_serializer.data
 
 

@@ -146,13 +146,25 @@
     </table>
 </center>
 <br><br><br>
-{% block content %}
+{% block content1 %}
 <div id="container" style="width:80%;">
     <canvas data-url="{% url 'state-graph' %}?state_id={{data.id}}" id="population-chart"></canvas>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="{% static 'jscript.js' %}"></script>
+<br><br><br>
+{% if data.big_state %}
+{% block content %}
+<div id="container1" style="width:80%;">
+    <canvas data-url="{% url 'state-graph' %}?state_id={{data.id}}&big_state=true"
+            id="population-chart_above40"></canvas>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="{% static 'jscript.js' %}"></script>
+{% endblock %}
+{% endif %}
 {% endblock %}
 </body>
 </html>
