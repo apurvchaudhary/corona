@@ -1,6 +1,7 @@
 from django.core.cache import cache
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -86,6 +87,7 @@ class AllStateLabelDataView(APIView):
     View to get graph of all state data json {labels : [], data : []}
     """
 
+    @swagger_auto_schema(responses={200: "{'labels' : [], 'data' : []}"})
     def get(self, request):
         """
         param : request
@@ -123,6 +125,7 @@ class DistrictLabelDataView(APIView):
     View to get state page graph data of all district json {labels : [], data : []}
     """
 
+    @swagger_auto_schema(responses={200: "{'labels' : [], 'data' : []}"})
     def get(self, request):
         """
         param : get request with state_id in query params
@@ -172,6 +175,8 @@ class CaseTimeLineGraphDataView(APIView):
     View to get line graph labels & data
     """
 
+    @swagger_auto_schema(responses={200: "{'labels' : [], 'total_confirmed' : [], 'total_recovered' : [],"
+                                         "'total_death' : []}"})
     def get(self, request):
         """
         param : get request
@@ -193,6 +198,7 @@ class UpdateDataView(APIView):
     """
     permission_classes = (Check_API_KEY_Auth,)
 
+    @swagger_auto_schema(responses={200: "Updated Successfully"})
     def put(self, request):
         """
         param : put request with authentication key provided
@@ -215,6 +221,7 @@ class CreateDataView(APIView):
     """
     permission_classes = (Check_API_KEY_Auth,)
 
+    @swagger_auto_schema(responses={200: "created data successfully"})
     def post(self, request):
         """
         param : post request with authentication key provided
