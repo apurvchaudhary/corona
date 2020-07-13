@@ -22,7 +22,7 @@ District search option is developed to search district by name or give 1st three
 This is open source project and you are welcome to contribute.
 </li>
 <li>
-project url : http://ec2-3-135-201-128.us-east-2.compute.amazonaws.com/corona/home/
+project url : <b>https://www.apurvchaudhary.site/corona/home/</b>
 </li>
 <li>
 currently running on AWS ec2 with apache2 server
