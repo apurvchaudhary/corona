@@ -5,8 +5,8 @@ from corona_app.views import search_view, safety_view, case_time_graph_view, all
     CaseTimeLineGraphDataView, CountryView
 
 urlpatterns = [
-    re_path(r'^safety/$', safety_view, name="safety-tips"),
-    re_path(r'^about/$', about_view, name="about"),
+    re_path(r'^safety//$', safety_view, name="safety-tips"),
+    re_path(r'^about//$', about_view, name="about"),
     re_path(r'^search/$', search_view, name="search"),
     re_path(r'^home/$', CountryView.as_view(), name="home"),
     re_path(r'^stategraph/$', DistrictLabelDataView.as_view(), name="state-graph"),
